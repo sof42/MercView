@@ -8,32 +8,50 @@ const conn = mysql.createConnection({
 
 let dataPool = {};
 
-dataPool.allUsers = () => {
+dataPool.allParts = () => {
     return new Promise((resolve, reject) =>{
-        conn.query(`SELECT * FROM Users`, (err, res)=>{
+        conn.query(`SELECT * FROM Car_Parts`, (err, res)=>{
             if(err){return reject(err)}
             return resolve(res)
             })
         })
     }
 
-    dataPool.oneUser=(employee_id)=>{
+    dataPool.onePart=(part_number)=>{
         return new Promise ((resolve, reject)=>{
-          conn.query(`SELECT * FROM Users WHERE employee_id = ?`, employee_id, (err, res)=>{
+          conn.query(`SELECT * FROM Car_Parts WHERE part_number = ?`, part_number, (err, res)=>{
             if(err){return reject(err)}
             return resolve(res)
           })
         })
       }
       
-      dataPool.insertUser=(employee_id, role_id, first_name, last_name, username, password)=>{
+      dataPool.insertPart=(part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg)=>{
         return new Promise ((resolve, reject)=>{
-          conn.query(`INSERT INTO Users (employee_id, role_id, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?, ?)`, [employee_id, role_id, first_name, last_name, username, password], (err,res)=>{
+          conn.query(`INSERT INTO Car_Parts (part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg) VALUES (?, ?, ?, ?, ?, ?)`, [part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg], (err,res)=>{
             if(err){return reject(err)}
             return resolve(res)
           })
         })
       }
+
+      dataPool.editPart = (part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg) => {
+        return new Promise((resolve, reject) => {
+            const query = `
+                UPDATE Car_Parts
+                SET part_description = ?, quantity = ?, country_of_origin = ?, euro_price_per_unit = ?, weight_per_unit_kg = ?
+                WHERE part_number = ?
+            `;
+            const values = [part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg, part_number];
+    
+            conn.query(query, values, (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            });
+        });
+    }
 
       dataPool.AuthUser=(username)=>
         {
