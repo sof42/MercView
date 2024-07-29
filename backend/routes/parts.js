@@ -24,6 +24,7 @@ parts.get('/:id', async (req, res, next) => {
     }
 });
 
+//insert a new part
 parts.post("/", async (req, res, next) => {
     try {
         // Extract data from request body
@@ -43,13 +44,11 @@ parts.post("/", async (req, res, next) => {
             const queryResult = await db.insertPart(part_number, part_description, quantity, ountry_of_origin, euro_price_per_unit, weight_per_unit_kg);
 
             if (queryResult.affectedRows) {
-                console.log("Product added successfully");
                 res.status(201).json({ message: "Product successfully added" });
             } else {
                 res.status(500).json({ error: "Failed to add product" });
             }
         } else {
-            console.log("Missing fields");
             res.status(400).json({ error: "Missing required fields" });
         }
     } catch (err) {
@@ -58,6 +57,7 @@ parts.post("/", async (req, res, next) => {
     }
 });
 
+//edit part info
 parts.put("/:part_number", async (req, res, next) => {
     const part_number = req.params.part_number;
     const part_description = req.body.part_description;

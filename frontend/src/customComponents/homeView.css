@@ -1,0 +1,42 @@
+/* HomeView.css */
+
+/* Ensure that html and body take up full height and prevent scroll bars */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Ensure the home-view starts below the navbar */
+.home-view {
+  position: absolute;
+  top: 0; /* Start from the top */
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height of the viewport */
+  overflow: hidden; /* Prevent internal scroll bars */
+  padding-top: 56px; /* Adjust based on your navbar height */
+  box-sizing: border-box; /* Include padding in the height calculation */
+}
+
+/* Ensure the video covers the entire home-view container */
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  object-fit: cover; /* Cover the entire area while maintaining aspect ratio */
+  z-index: -1; /* Behind the content */
+}
+
+.content-overlay {
+  margin-top: 6em;
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  z-index: 1; /* Ensure content is above the video */
+  padding: 20px;
+  width: 30em;
+}
