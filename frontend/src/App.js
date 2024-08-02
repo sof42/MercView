@@ -1,18 +1,26 @@
-import { Component } from "react";
+import React, { Component } from "react";
+import axios from "axios";
 import AboutView from "./customComponents/AboutView";
 import HomeView from "./customComponents/HomeView";
 import LoginView from "./customComponents/LoginView";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       CurrentPage: "home", // Set a default page
+      userStatus: {
+        logged: false,
+        user: {},
+      }
     };
   }
 
   GetView = () => {
-    const { CurrentPage } = this.state;
+    const { CurrentPage, userStatus } = this.state;
 
     switch (CurrentPage) {
       case "home":
@@ -20,7 +28,7 @@ class App extends Component {
       case "about":
         return <AboutView />;
       case "login":
-        return <LoginView />;
+        return <LoginView QUserFromChild={this.QSetUser} />;
       default:
         return <HomeView />; // Fallback to home if no match is found
     }
@@ -29,6 +37,57 @@ class App extends Component {
   SetView = (page) => {
     this.setState({ CurrentPage: page });
   };
+
+  QSetUser = (user) => {
+    this.setState({
+      userStatus: {
+        logged: true,
+        user: user,
+      },
+    });
+    cookies.set("userSession", user, { path: "/" }); // Save the user session in a cookie
+    this.SetView("home");
+  };
+
+  handleLogin = (credentials) => {
+    axios
+      .post("http://88.200.63.148:8162/users/login", credentials, { withCredentials: true })
+      .then((response) => {
+        if (response.data.loggedIn) {
+          this.QSetUser(response.data.user);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during login:", error.message);
+        // Handle error (show toast or alert)
+      });
+  };
+
+ /* handleLogout = () => {
+    axios
+      .post("http://88.200.63.148:8162/users/logout", {}, { withCredentials: true })
+      .then((response) => {
+        this.setState({
+          userStatus: { logged: false, user: {} }
+        });
+        cookies.remove("userSession"); // Remove the session cookie
+        console.log("Logged out successfully");
+        // Handle success (show toast or alert)
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error.message);
+        // Handle error (show toast or alert)
+      });
+  };*/
+
+  componentDidMount() {
+    const userSession = cookies.get("userSession");
+    if (userSession) {
+      this.setState({
+        userStatus: { logged: true, user: userSession }
+      });
+    }
+  }
 
   render() {
     return (
@@ -47,6 +106,7 @@ class App extends Component {
                 src="./assets/logo1.png"
                 height="30"
                 style={{ marginRight: "0.5em", marginLeft: "0.5em" }}
+                alt="Logo"
               />
               MercView
             </a>
@@ -104,24 +164,41 @@ class App extends Component {
                       About us
                     </a>
                   </li>
-                  <li className="nav-item">
-                    <a
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.SetView("login");
-                      }}
-                      className="nav-link"
-                      href="#"
-                    >
-                      Login
-                    </a>
-                  </li>
+                  {!this.state.userStatus.logged ? (
+                    <li className="nav-item">
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          this.SetView("login");
+                        }}
+                        className="nav-link"
+                        href="#"
+                      >
+                        Login
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item">
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          this.handleLogout();
+                        }}
+                        className="nav-link"
+                        href="#"
+                      >
+                        Logout
+                      </a>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>
           </div>
         </nav>
-        <main className="pt-5 mt-5">{this.GetView()}</main>
+        <main className="pt-5 mt-5">
+          {this.GetView()}
+        </main>
       </div>
     );
   }

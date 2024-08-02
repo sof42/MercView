@@ -1,47 +1,66 @@
 const express = require('express');
-const { title } = require('process');
 const users = express.Router();
-const db = require('../DB/dbConn.js')
+const db = require('../DB/dbConn.js');
+const session = require('express-session');
 
+users.use(session({
+    secret: "secretpassword",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000 // Session expires in 10 minutes
+    }
+}));
 
-users.get('/', async (req, res, next) => {
+// Endpoint to get all users
+users.get('/', async (req, res) => {
     try {
-        var queryResult = await db.allUsers();
+        const queryResult = await db.allUsers();
         res.json(queryResult);
-
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.sendStatus(500);
     }
 });
 
+// Endpoint for user login
 users.post('/login', async (req, res) => {
-    let [username, password] = req.body;
-    let isUserComplete = username && password;
-    if(isUserComplete){
-        try {
-            let queryResult = await db.authUser(username);
-            if(queryResult>0){
-                if(password===queryResult[0].password){
-                    console.log(queryResult);
-                    console.log("User found");
-                    res.sendStatus(200);
-                }else{
-                    console.log("Password incorrect");
-                }
-            }else{
-                console.log("User not found");
-            }
-        } catch (error) {
-            console.log(error);
-            res.sendStatus(500);
-            
-        }
-    }else{
-        console.log("Enter username AND password");
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Please enter both username and password.' });
     }
-    res.end();
+
+    try {
+        const user = await db.AuthUser(username);
+
+        if (user && user.length > 0) {
+            if (password === user[0].password) {
+                req.session.userId = user[0].id;
+                req.session.username = user[0].username;
+
+                res.json({ message: 'Login successful' });
+            } else {
+                res.status(401).json({ message: 'Incorrect password' });
+            }
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
+});
+
+// Endpoint for logout
+users.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).json({ message: 'Failed to log out' });
+        }
+        res.clearCookie('connect.sid'); // Clear the session cookie
+        res.json({ message: 'Logout successful' });
+    });
 });
 
 module.exports = users;
-
