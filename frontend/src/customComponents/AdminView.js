@@ -1,17 +1,20 @@
 import React from 'react';
 import '../customStyles/AdminView.css';
 
-const AdminView = ({ user, handleManageUsers }) => {
+const AdminView = ({ user, handleManageUsers, showAllUsers }) => {
   return (
     <div>
       <h2>Admin Dashboard</h2>
       {user ? (
         <div>
           <p>Welcome, {user.username}!</p>
-          {/* Button to navigate to Add/Remove User view */}
           <button onClick={handleManageUsers} className="btn manage-users-btn">
-            <img src="/assets/AddRem.png" alt="Manage Users" className="icon" />
+            <img src="/assets/AddRem.png" className="icon" />
             Add or Remove Users
+          </button><br></br>
+          <button onClick={showAllUsers} className="btn view-users-btn">
+          <img src="/assets/allEmps.png" className="icon" />
+            View All Employees
           </button>
         </div>
       ) : (

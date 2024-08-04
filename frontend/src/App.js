@@ -10,7 +10,7 @@ import AdminView from "./customComponents/AdminView";
 import ManagerView from "./customComponents/ManagerView";
 import SalesView from "./customComponents/SalesView";
 import AddRemoveUser from "./customComponents/AddRemoveUser";
-
+import AllUsers from "./customComponents/AllUsers.js";
 const cookies = new Cookies();
 
 class App extends Component {
@@ -38,13 +38,18 @@ class App extends Component {
       case "login":
         return <LoginView QUserFromChild={this.QSetUser} />;
       case "admin":
-        return roleId === 1 ? <AdminView user={userStatus.user} handleManageUsers={this.handleManageUsers} /> : <HomeView />;
+        return roleId === 1 ? <AdminView 
+                      user={userStatus.user} 
+                      handleManageUsers={this.handleManageUsers} 
+                      showAllUsers={this.showAllUsers} /> : <HomeView />;
       case "manager":
         return roleId === 2 ? <ManagerView /> : <HomeView />;
       case "sales":
         return roleId === 3 ? <SalesView /> : <HomeView />;
       case "addRemoveUser":
         return <AddRemoveUser />;
+      case "allUsers":
+        return <AllUsers />;
       default:
         return <HomeView />; // Fallback
     }
@@ -102,6 +107,10 @@ class App extends Component {
     this.SetView("addRemoveUser");
   }
 
+  showAllUsers = () => {
+    this.SetView("allUsers");
+  }
+  
   componentDidMount() {
     const userSession = cookies.get("userSession");
     if (userSession) {
