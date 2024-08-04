@@ -70,7 +70,20 @@ dataPool.AuthUser=(username) => {
     });
   };
 
-dataPool.addUser = (role_id, first_name, last_name, username, password) => {
+  dataPool.getUserById = (employee_id) => {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM Users WHERE employee_id = ?';
+      const values = [employee_id];
+  
+      conn.query(query, values, (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      });
+    });
+  };
+  dataPool.addUser = (role_id, first_name, last_name, username, password) => {
     return new Promise((resolve, reject) => {
         const query = `
             INSERT INTO Users (role_id, first_name, last_name, username, password)
@@ -81,9 +94,33 @@ dataPool.addUser = (role_id, first_name, last_name, username, password) => {
             if (err) {
                 return reject(err);
             }
-            return resolve(results);
+            return resolve({
+                employee_id: results.insertId,
+                role_id,
+                first_name,
+                last_name,
+                username
+            });
         });
     });
+};
+
+
+
+dataPool.removeUser = (employee_id) => {
+  return new Promise((resolve, reject) => {
+      const query = `
+          DELETE FROM Users
+          WHERE employee_id = ?`;
+      const values = [employee_id];
+
+      conn.query(query, values, (err, results) => {
+          if (err) {
+              return reject(err);
+          }
+          return resolve(results);
+      });
+  });
 };
         
 conn.connect((err) => {

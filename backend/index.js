@@ -16,7 +16,7 @@ app.use(express.json()); // Parse JSON bodies
 
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cors({
-    origin: 'http://88.200.63.148:8163', // Replace with your frontend's origin
+    origin: 'http://88.200.63.148:8163', // frontend location
     credentials: true
 }));
 

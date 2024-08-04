@@ -1,5 +1,5 @@
 import React from "react";
-import "./homeView.css";
+import "../customStyles/homeView.css";
 
 class homeView extends React.Component {
   render() {
@@ -13,7 +13,7 @@ class homeView extends React.Component {
           <div className="container">
             <div className="card border-dark mb-3">
               <div className="card-header bg-dark text-white">
-                <h4 className="card-title">Welcome to MercView</h4>
+                <h4 className="card-title">Welcome to MercView!</h4>
               </div>
               <div className="card-body">
                 <h5 className="card-subtitle mb-2 text-muted">

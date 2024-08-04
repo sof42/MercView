@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
-import './loginView.css';
+import '../customStyles/loginView.css';
 
 class LoginView extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class LoginView extends Component {
     axios.post("http://88.200.63.148:8162/users/login", { username, password }, { withCredentials: true })
       .then(res => {
         if (res.status === 200) {
-          toast.success("✅ Logged in successfully", {
+          toast.success("Logged in successfully", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -41,13 +41,21 @@ class LoginView extends Component {
             progress: undefined,
             theme: "colored",
           });
-          this.props.QUserFromChild({ username });
-        } else {
-          toast.error("User not registered or incorrect credentials!");
+
+          const roleId = res.data.roleId; // Get role id from response
+          this.props.QUserFromChild({ username, roleId }); // Pass the roleId to the parent component
         }
       })
       .catch(error => {
-        toast.error("Error logging in: " + error.message);
+        if (error.response) {
+          if (error.response.status === 401 || error.response.status === 404) {
+            toast.error("User not registered or incorrect credentials!");
+          } else {
+            toast.error("Error logging in: " + error.message);
+          }
+        } else {
+          toast.error("Error logging in: " + error.message);
+        }
       });
   };
 

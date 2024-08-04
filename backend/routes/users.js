@@ -38,8 +38,12 @@ users.post('/login', async (req, res) => {
             if (password === user[0].password) {
                 req.session.userId = user[0].id;
                 req.session.username = user[0].username;
+                req.session.roleId = user[0].role_id;
 
-                res.json({ message: 'Login successful' });
+                res.json({ 
+                    message: 'Login successful', 
+                    roleId: user[0].role_id // Include role id in response
+                });
             } else {
                 res.status(401).json({ message: 'Incorrect password' });
             }
@@ -62,5 +66,61 @@ users.post('/logout', (req, res) => {
         res.json({ message: 'Logout successful' });
     });
 });
+
+//Endpoint for adding users
+users.post('/add', async (req, res) => {
+    const { username, password, role_id, first_name, last_name } = req.body;
+
+    // Validate that role_id is a number
+    if (!username || !password || !role_id || !first_name || !last_name || isNaN(role_id)) {
+        return res.status(400).json({ message: 'Please provide valid username, password, role ID (as integer), first name, and last name.' });
+    }
+
+    try {
+        const newUser = await db.addUser(parseInt(role_id), first_name, last_name, username, password);
+        res.status(201).json({ message: 'User added successfully', user: newUser });
+    } catch (error) {
+        console.error('Error adding user:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+users.get('/:userId', async (req, res) => {
+    const { userId } = req.params;
+  
+    try {
+      const user = await db.getUserById(userId);
+  
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: 'User not found.' });
+      }
+    } catch (error) {
+      console.error('Error checking user existence:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+
+// Endpoint to remove a user
+users.delete('/remove/:id', async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        const result = await db.removeUser(userId);
+
+        // Check if any rows were affected by the delete operation
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'User removed successfully' });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500); // Internal Server Error
+    }
+});
+
+
 
 module.exports = users;

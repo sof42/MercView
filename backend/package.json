@@ -17,6 +17,8 @@
     "express-session": "^1.18.0",
     "mysql2": "^3.10.3",
     "node-session": "^1.2.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-router-dom": "^6.26.0",
+    "react-toastify": "^10.0.5"
   }
 }
