@@ -3,6 +3,19 @@
   justify-content: space-between;
   padding: 20px;
 }
+#buttonDiv {
+  display: flex;
+  justify-content: center;
+}
+#backButton{
+  background-color: #868585;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 8px;
+}
+
 
 #add-user-card,
 #remove-user-card {

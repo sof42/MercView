@@ -47,3 +47,18 @@
 #edit-profile-card button:hover {
     background-color: #383838;
 }
+
+#buttonDiv1{
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+#backButton2{
+    background-color: #6f6f6f;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+}

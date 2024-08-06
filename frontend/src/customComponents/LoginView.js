@@ -47,7 +47,7 @@ class LoginView extends Component {
           const userId = res.data.userId; // Get user id from response
           const firstName = res.data.firstName; // Get first name from response
           const lastName = res.data.lastName; // Get last name from response
-          this.props.QUserFromChild({ username, roleId, userId, firstName, lastName }); // Pass the roleId to the parent component
+          this.props.QUserFromChild({ username, roleId, userId, firstName, lastName }); // Pass them to the parent component
         }
       })
       .catch(error => {

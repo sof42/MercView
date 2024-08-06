@@ -54,12 +54,15 @@ class App extends Component {
                       user={userStatus.user}
                       handleEditProfile={this.handleEditProfile}/> : <HomeView />;
       case "addRemoveUser":
-        return <AddRemoveUser />;
+        return <AddRemoveUser
+                      handleBack = {this.handleBack}/>;
       case "allUsers":
-        return <AllUsers />;
+        return <AllUsers
+                      handleBack = {this.handleBack} />;
         case "editProfile":
           return <EditProfile 
-                      user={userStatus.user} />;
+                      user={userStatus.user}
+                      handleBack = {this.handleBack}/>;
       default:
         return <HomeView />; // Fallback
     }
@@ -118,6 +121,23 @@ class App extends Component {
   handleManageUsers = () => {
     this.SetView("addRemoveUser");
   }
+
+  handleBack = () => {
+    const { roleId } = this.state.userStatus.user;
+    switch (roleId) {
+      case 1: 
+        this.SetView("admin");
+        break;
+      case 2: 
+        this.SetView("manager");
+        break;
+      case 3: 
+        this.SetView("sales");
+        break;
+      default: 
+        this.SetView("home");
+    }
+  };
 
   showAllUsers = () => {
     this.SetView("allUsers");

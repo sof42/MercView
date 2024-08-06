@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../customStyles/AllUsers.css';
 
-const AllUsers = () => {
+const AllUsers = ({handleBack}) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const AllUsers = () => {
 
   return (
     <div>
-      <h2>Employee Data</h2><br></br>
+      <h2>Employee Data <button onClick={handleBack} id='backButton1'> Back to Dashboard </button> </h2><br></br>
       <table className="user-table">
         <thead>
           <tr>

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../customStyles/AddRemoveUser.css';
 import {API_URL} from './utils/config';
 
-const AddRemoveUser = () => {
+const AddRemoveUser = ({handleBack}) => {
   const [newUser, setNewUser] = useState({
     roleId: 1,
     firstName: '',
@@ -110,73 +110,78 @@ const AddRemoveUser = () => {
   }, []);
 
   return (
-    <div id="add-remove-user-container">
-      <div id="add-user-card" className="card">
-        <h2>Add User</h2>
-        <select
-          id="role-select"
-          name="roleId"
-          value={newUser.roleId}
-          onChange={handleRoleChange}
-          className="input-field"
-        >
-          <option value={1}>Admin</option>
-          <option value={2}>Manager</option>
-          <option value={3}>Sales Personnel</option>
-        </select>
-        <input
-          id="first-name-input"
-          type="text"
-          name="firstName"
-          value={newUser.firstName}
-          onChange={handleInputChange}
-          placeholder="First Name"
-          className="input-field"
-        />
-        <input
-          id="last-name-input"
-          type="text"
-          name="lastName"
-          value={newUser.lastName}
-          onChange={handleInputChange}
-          placeholder="Last Name"
-          className="input-field"
-        />
-        <input
-          id="username-input"
-          type="text"
-          name="username"
-          value={newUser.username}
-          onChange={handleInputChange}
-          placeholder="Username"
-          className="input-field"
-        />
-        <input
-          id="password-input"
-          type="password"
-          name="password"
-          value={newUser.password}
-          onChange={handleInputChange}
-          placeholder="Password"
-          className="input-field"
-        />
-        <button id="add-user-button" onClick={handleAddUser} className="button">Add User</button>
-      </div>
+    <div>
+      <div id="add-remove-user-container">
+        <div id="add-user-card" className="card">
+          <h2>Add User</h2>
+          <select
+            id="role-select"
+            name="roleId"
+            value={newUser.roleId}
+            onChange={handleRoleChange}
+            className="input-field"
+          >
+            <option value={1}>Admin</option>
+            <option value={2}>Manager</option>
+            <option value={3}>Sales Personnel</option>
+          </select>
+          <input
+            id="first-name-input"
+            type="text"
+            name="firstName"
+            value={newUser.firstName}
+            onChange={handleInputChange}
+            placeholder="First Name"
+            className="input-field"
+          />
+          <input
+            id="last-name-input"
+            type="text"
+            name="lastName"
+            value={newUser.lastName}
+            onChange={handleInputChange}
+            placeholder="Last Name"
+            className="input-field"
+          />
+          <input
+            id="username-input"
+            type="text"
+            name="username"
+            value={newUser.username}
+            onChange={handleInputChange}
+            placeholder="Username"
+            className="input-field"
+          />
+          <input
+            id="password-input"
+            type="password"
+            name="password"
+            value={newUser.password}
+            onChange={handleInputChange}
+            placeholder="Password"
+            className="input-field"
+          />
+          <button id="add-user-button" onClick={handleAddUser} className="button">Add User</button>
+        </div>
 
-      <div id="remove-user-card" className="card">
-        <h2>Remove User</h2>
-        <input
-          id="remove-user-id-input"
-          type="text"
-          value={userIdToRemove}
-          onChange={(e) => setUserIdToRemove(e.target.value)}
-          placeholder="User ID to Remove"
-          className="input-field"
-        />
-        <button id="remove-user-button" onClick={handleRemoveUser} className="button">Remove User</button>
-      </div>
+        <div id="remove-user-card" className="card">
+          <h2>Remove User</h2>
+          <input
+            id="remove-user-id-input"
+            type="text"
+            value={userIdToRemove}
+            onChange={(e) => setUserIdToRemove(e.target.value)}
+            placeholder="User ID to Remove"
+            className="input-field"
+          />
+          <button id="remove-user-button" onClick={handleRemoveUser} className="button">Remove User</button>
+        </div>
 
-      <ToastContainer />
+        <ToastContainer />
+        </div><br></br>
+        <div id='buttonDiv'>
+          <button onClick={handleBack} id = "backButton">Return to Dashboard</button>
+        </div>
     </div>
   );
 };

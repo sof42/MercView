@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { API_URL } from './utils/config.js';
-import '../customStyles/EditProfile.css';  // Import the CSS file
+import '../customStyles/EditProfile.css';
 
 class EditProfile extends Component {
     constructor(props) {
@@ -58,55 +58,61 @@ class EditProfile extends Component {
 
     render() {
         const { username, firstName, lastName, password } = this.state;
+        const { handleBack } = this.props;
         return (
-            <div id="edit-profile-card">
-                <h2>Edit Profile</h2>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="username">Username:</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={username}
-                            onChange={this.handleInputChange}
-                            required
-                        />
+            <div>
+                <div id="edit-profile-card">
+                    <h2>Edit Profile</h2>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="username">Username:</label>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                value={username}
+                                onChange={this.handleInputChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="firstName">First Name:</label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                value={firstName}
+                                onChange={this.handleInputChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="lastName">Last Name:</label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                value={lastName}
+                                onChange={this.handleInputChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">New Password: (enter only if you want to change existing password)</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={password}
+                                onChange={this.handleInputChange}
+                            />
+                        </div>
+                        <button type="submit">Update Profile</button>
+                    </form>
+                </div>
+                    <div id="buttonDiv1">
+                        <button onClick={handleBack} id="backButton2">Return to Dashboard</button>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="firstName">First Name:</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            name="firstName"
-                            value={firstName}
-                            onChange={this.handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="lastName">Last Name:</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            name="lastName"
-                            value={lastName}
-                            onChange={this.handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">New Password: (enter only if you want to change existing password)</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={password}
-                            onChange={this.handleInputChange}
-                        />
-                    </div>
-                    <button type="submit">Update Profile</button>
-                </form>
             </div>
         );
     }
