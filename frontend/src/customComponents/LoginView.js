@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 import '../customStyles/loginView.css';
+import {API_URL} from './utils/config.js';
 
 class LoginView extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class LoginView extends Component {
       return;
     }
 
-    axios.post("http://88.200.63.148:8162/users/login", { username, password }, { withCredentials: true })
+    axios.post(API_URL + "/users/login", { username, password }, { withCredentials: true })
       .then(res => {
         if (res.status === 200) {
           toast.success("Logged in successfully", {
@@ -43,7 +44,10 @@ class LoginView extends Component {
           });
 
           const roleId = res.data.roleId; // Get role id from response
-          this.props.QUserFromChild({ username, roleId }); // Pass the roleId to the parent component
+          const userId = res.data.userId; // Get user id from response
+          const firstName = res.data.firstName; // Get first name from response
+          const lastName = res.data.lastName; // Get last name from response
+          this.props.QUserFromChild({ username, roleId, userId, firstName, lastName }); // Pass the roleId to the parent component
         }
       })
       .catch(error => {

@@ -23,6 +23,20 @@ users.get('/', async (req, res) => {
     }
 });
 
+users.get("/login", (req, res) => {
+    if(req.session.user){
+        res.send({
+            loggedIn:true,
+            user:req.session.user
+        })
+    }else
+    {
+        res.send({
+            loggedIn:false
+        });
+    }
+});
+
 // Endpoint for user login
 users.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -36,13 +50,18 @@ users.post('/login', async (req, res) => {
 
         if (user && user.length > 0) {
             if (password === user[0].password) {
-                req.session.userId = user[0].id;
+                req.session.userId = user[0].employee_id;
                 req.session.username = user[0].username;
                 req.session.roleId = user[0].role_id;
-
+                req.session.firstName = user[0].first_name;
+                req.session.lastName = user[0].last_name;
+                console.log(req.session);
                 res.json({ 
                     message: 'Login successful', 
-                    roleId: user[0].role_id // Include role id in response
+                    roleId: user[0].role_id, // Include role id in response
+                    userId: user[0].employee_id,// Include user id in response
+                    firstName: user[0].first_name,
+                    lastName: user[0].last_name
                 });
             } else {
                 res.status(401).json({ message: 'Incorrect password' });
@@ -120,6 +139,27 @@ users.delete('/remove/:id', async (req, res) => {
         res.sendStatus(500); // Internal Server Error
     }
 });
+
+// Endpoint to edit a user profile
+users.put('/edit/:userId', async (req, res) => {
+    const { userId } = req.params;
+    const { username, firstName, lastName, password } = req.body;
+  
+    try {
+      const result = await db.editUser(username, password, firstName, lastName, userId);
+  
+      if (result.affectedRows > 0) {
+        res.status(200).json({ message: 'Profile updated successfully' });
+      } else {
+        res.status(404).json({ message: 'User not found' });
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+
+
 
 
 

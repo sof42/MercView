@@ -122,6 +122,34 @@ dataPool.removeUser = (employee_id) => {
       });
   });
 };
+
+dataPool.editUser = (username, password, first_name, last_name, employee_id) => {
+  return new Promise((resolve, reject) => {
+    let query = 'UPDATE Users SET username = ?, first_name = ?, last_name = ?';
+    let values = [username, first_name, last_name];
+
+    if (password) {
+      query += ', password = ?';
+      values.push(password);
+    }
+
+    query += ' WHERE employee_id = ?';
+    values.push(employee_id);
+
+    console.log('Executing SQL Query:', query);
+    console.log('With Values:', values);
+
+    conn.query(query, values, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
+
+
         
 conn.connect((err) => {
     if(err){

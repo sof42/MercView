@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../customStyles/AddRemoveUser.css';
+import {API_URL} from './utils/config';
 
 const AddRemoveUser = () => {
   const [newUser, setNewUser] = useState({
@@ -44,7 +45,7 @@ const AddRemoveUser = () => {
       return;
     }
 
-    axios.post('http://88.200.63.148:8162/users/add', {
+    axios.post(API_URL + '/users/add', {
       role_id: roleId,
       first_name: firstName,
       last_name: lastName,
@@ -77,7 +78,7 @@ const AddRemoveUser = () => {
 
   const handleRemoveUser = async () => {
     try {
-      const response = await axios.delete(`http://88.200.63.148:8162/users/remove/${userIdToRemove}`);
+      const response = await axios.delete(API_URL + `/users/remove/${userIdToRemove}`);
 
       if (response.status === 200) {
         toast.success('User removed successfully!');
@@ -95,7 +96,7 @@ const AddRemoveUser = () => {
   };
 
   const fetchUsers = () => {
-    axios.get('http://88.200.63.148:8162/users')
+    axios.get(API_URL + '/users')
       .then(response => {
         setUsers(response.data.users || []);
       })

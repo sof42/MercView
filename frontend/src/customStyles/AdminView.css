@@ -1,37 +1,31 @@
-.manage-users-btn {
-    display: flex;
-    max-width: 16em;
-    min-width: 16em;
-    align-items: center;
-    justify-content: center;
-    padding: 0.2em 0.2em;
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.3em;
-  }
-.view-users-btn{
-    display: flex;
-    max-width: 16em;
-    min-width: 16em;
-    align-items: center;
-    justify-content: center;
-    padding: 0.2em 0.2em;
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.3em;
+.edit-profile-btn{
+  color: #1a2e96;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-decoration: underline;
 }
-  .manage-users-btn:hover {
-    background-color: #3a3d40;
+
+.manage-users-btn, .view-users-btn {
+    display: flex;
+    max-width: 16em;
+    min-width: 16em;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2em 0.2em;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.3em;
   }
+  
+  .manage-users-btn:hover, .view-users-btn:hover {
+    background-color: #7e7e7f;
+  }
+  
   .icon {
     width: 6em;
     height: 4em;
     margin-right: 0.1em;
   }
-  

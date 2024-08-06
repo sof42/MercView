@@ -11,6 +11,8 @@ import ManagerView from "./customComponents/ManagerView";
 import SalesView from "./customComponents/SalesView";
 import AddRemoveUser from "./customComponents/AddRemoveUser";
 import AllUsers from "./customComponents/AllUsers.js";
+import EditProfile from "./customComponents/EditProfile.js";
+import {API_URL} from './customComponents/utils/config.js';
 const cookies = new Cookies();
 
 class App extends Component {
@@ -38,18 +40,26 @@ class App extends Component {
       case "login":
         return <LoginView QUserFromChild={this.QSetUser} />;
       case "admin":
-        return roleId === 1 ? <AdminView 
-                      user={userStatus.user} 
-                      handleManageUsers={this.handleManageUsers} 
-                      showAllUsers={this.showAllUsers} /> : <HomeView />;
+        return roleId === 1 ? <AdminView
+                      user={userStatus.user}
+                      handleManageUsers={this.handleManageUsers}
+                      showAllUsers={this.showAllUsers}
+                      handleEditProfile={this.handleEditProfile} /> : <HomeView />;
       case "manager":
-        return roleId === 2 ? <ManagerView /> : <HomeView />;
+        return roleId === 2 ? <ManagerView
+                      user={userStatus.user}
+                      handleEditProfile = {this.handleEditProfile}/> : <HomeView />;
       case "sales":
-        return roleId === 3 ? <SalesView /> : <HomeView />;
+        return roleId === 3 ? <SalesView
+                      user={userStatus.user}
+                      handleEditProfile={this.handleEditProfile}/> : <HomeView />;
       case "addRemoveUser":
         return <AddRemoveUser />;
       case "allUsers":
         return <AllUsers />;
+        case "editProfile":
+          return <EditProfile 
+                      user={userStatus.user} />;
       default:
         return <HomeView />; // Fallback
     }
@@ -68,15 +78,17 @@ class App extends Component {
         user: user,
       },
     });
+    alert("Logged in as " + user.username);
     cookies.set("userSession", user, { path: "/" }); // Save the user session in a cookie
   };
 
   handleLogin = (credentials) => {
     axios
-      .post("http://88.200.63.148:8162/users/login", credentials, { withCredentials: true })
+      .post(API_URL + "/users/login", credentials, { withCredentials: true })
       .then((response) => {
         if (response.data.loggedIn) {
           this.QSetUser(response.data.user);
+          console.log(userStatus.user)
         }
       })
       .catch((error) => {
@@ -87,7 +99,7 @@ class App extends Component {
 
   handleLogout = () => {
     axios
-      .post(`http://88.200.63.148:8162/users/logout`, {}, { withCredentials: true })
+      .post(API_URL + `/users/logout`, {}, { withCredentials: true })
       .then((res) => {
         this.setState({
           CurrentPage: "home",
@@ -110,7 +122,10 @@ class App extends Component {
   showAllUsers = () => {
     this.SetView("allUsers");
   }
-  
+
+  handleEditProfile = () => {
+    this.SetView("editProfile");
+  }
   componentDidMount() {
     const userSession = cookies.get("userSession");
     if (userSession) {
@@ -230,6 +245,7 @@ class App extends Component {
                             }}
                             className="nav-link"
                             href="#"
+                            style={{ fontWeight: 'bold', fontSize: '1.2em' }}
                           >
                             Admin Panel
                           </a>
@@ -244,6 +260,7 @@ class App extends Component {
                             }}
                             className="nav-link"
                             href="#"
+                            style={{ fontWeight: 'bold', fontSize: '1.2em' }}
                           >
                             Manager Dashboard
                           </a>
@@ -258,6 +275,7 @@ class App extends Component {
                             }}
                             className="nav-link"
                             href="#"
+                            style={{ fontWeight: 'bold', fontSize: '1.2em' }}
                           >
                             Sales Dashboard
                           </a>
@@ -277,6 +295,7 @@ class App extends Component {
       </div>
     );
   }
+
 }
 
 export default App;

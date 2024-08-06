@@ -25,7 +25,7 @@ parts.get('/:id', async (req, res, next) => {
 });
 
 //insert a new part
-parts.post("/", async (req, res, next) => {
+parts.post("/insert", async (req, res, next) => {
     try {
         // Extract data from request body
         const part_number = req.body.part_number;
@@ -41,7 +41,7 @@ parts.post("/", async (req, res, next) => {
 
         if (isCompletePart) {
             // Add the product to the database
-            const queryResult = await db.insertPart(part_number, part_description, quantity, ountry_of_origin, euro_price_per_unit, weight_per_unit_kg);
+            const queryResult = await db.insertPart(part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg);
 
             if (queryResult.affectedRows) {
                 res.status(201).json({ message: "Product successfully added" });
@@ -58,7 +58,7 @@ parts.post("/", async (req, res, next) => {
 });
 
 //edit part info
-parts.put("/:part_number", async (req, res, next) => {
+parts.put("/edit/:part_number", async (req, res, next) => {
     const part_number = req.params.part_number;
     const part_description = req.body.part_description;
     const quantity = req.body.quantity;
