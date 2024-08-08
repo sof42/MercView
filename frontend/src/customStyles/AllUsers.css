@@ -1,25 +1,25 @@
 .user-table {
-    width: 100%;
-  }
+  width: 100%;
+}
+
+.user-table th, .user-table td {
+  border: 2px solid #6c6c6c;
+  padding: 8px;
+}
   
-  .user-table th, .user-table td {
-    border: 2px solid #6c6c6c;
-    padding: 8px;
-  }
+.user-table th {
+  background-color: #969090;
+  text-align: left;
+}
   
-  .user-table th {
-    background-color: #969090;
-    text-align: left;
-  }
-  
-  .user-table tr:hover {
-    background-color: #6c6c6c;
-  }
-  #backButton1{
-    margin-left: 64%;
-    font-size: 0.8em;
-    background-color: #767676;
-    color: #000000;
-    border: none;
-    border-radius: 5px;
-  }
+.user-table tr:hover {
+  background-color: #6c6c6c;
+}
+#backButton1{
+  margin-left: 64%;
+  font-size: 0.8em;
+  background-color: #767676;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+}

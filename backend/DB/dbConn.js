@@ -35,14 +35,46 @@ dataPool.onePart=(part_number) => {
     });
   };
       
-dataPool.insertPart=(part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg)=>{
-  return new Promise ((resolve, reject)=>{
-    conn.query(`INSERT INTO Car_Parts (part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg) VALUES (?, ?, ?, ?, ?, ?)`, [part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg], (err,res)=>{
-      if(err){return reject(err)}
-      return resolve(res)
+  dataPool.insertPart = (part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        INSERT INTO Car_Parts (part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg)
+        VALUES (?, ?, ?, ?, ?)
+      `;
+      const values = [part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg];
+  
+      conn.query(query, values, (err, results) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve({
+          part_number: results.insertId,
+          part_description,
+          quantity,
+          country_of_origin,
+          euro_price_per_unit,
+          weight_per_unit_kg
+        });
+      });
     });
-  });
-};
+  };
+  
+dataPool.deletePart = (part_number) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            DELETE FROM Car_Parts
+            WHERE part_number = ?`;
+        const values = [part_number];
+
+        conn.query(query, values, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+}
 
 dataPool.editPart = (part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg) => {
   return new Promise((resolve, reject) => {

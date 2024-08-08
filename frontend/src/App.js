@@ -12,6 +12,8 @@ import SalesView from "./customComponents/SalesView";
 import AddRemoveUser from "./customComponents/AddRemoveUser";
 import AllUsers from "./customComponents/AllUsers.js";
 import EditProfile from "./customComponents/EditProfile.js";
+import AllProducts from "./customComponents/AllProducts.js";
+import AddRemovePart from "./customComponents/AddRemovePart.js";
 import {API_URL} from './customComponents/utils/config.js';
 const cookies = new Cookies();
 
@@ -48,7 +50,9 @@ class App extends Component {
       case "manager":
         return roleId === 2 ? <ManagerView
                       user={userStatus.user}
-                      handleEditProfile = {this.handleEditProfile}/> : <HomeView />;
+                      handleEditProfile = {this.handleEditProfile}
+                      showAllProds = {this.showAllProds}
+                      addRemovePart = {this.addRemovePart}/> : <HomeView />;
       case "sales":
         return roleId === 3 ? <SalesView
                       user={userStatus.user}
@@ -59,9 +63,15 @@ class App extends Component {
       case "allUsers":
         return <AllUsers
                       handleBack = {this.handleBack} />;
-        case "editProfile":
-          return <EditProfile 
+      case "editProfile":
+        return <EditProfile
                       user={userStatus.user}
+                      handleBack = {this.handleBack}/>;
+      case "allProds":
+        return <AllProducts
+                      handleBack = {this.handleBack}/>;
+      case "addRemovePart":
+        return <AddRemovePart
                       handleBack = {this.handleBack}/>;
       default:
         return <HomeView />; // Fallback
@@ -69,19 +79,23 @@ class App extends Component {
   };
 
   SetView = (page) => {
-    console.log("Setting view to: " + page);
     this.setState({ CurrentPage: page });
   };
 
   QSetUser = (user) => {
+    let roleId = user.roleId;
+    let page = "";
+    if(roleId === 1) page = "admin"
+    else if(roleId === 2) page = "manager"
+    else if(roleId === 3) page = "sales";
     this.setState({
-      CurrentPage: "home",
+      CurrentPage: page,
       userStatus: {
         logged: true,
         user: user,
       },
     });
-    alert("Logged in as " + user.username);
+    toast.success ("Logged in as " + user.username);
     cookies.set("userSession", user, { path: "/" }); // Save the user session in a cookie
   };
 
@@ -109,7 +123,6 @@ class App extends Component {
           userStatus: { logged: false, user: {} }
         });
         cookies.remove("userSession"); // Remove the session cookie
-        console.log("Logged out" + res.data.message);
         toast.success("Logged out successfully!");
       })
       .catch((error) => {
@@ -122,19 +135,24 @@ class App extends Component {
     this.SetView("addRemoveUser");
   }
 
+  addRemovePart = () => {
+    console.log("addRemovePart")
+    this.SetView("addRemovePart");
+  }
+
   handleBack = () => {
     const { roleId } = this.state.userStatus.user;
     switch (roleId) {
-      case 1: 
+      case 1:
         this.SetView("admin");
         break;
-      case 2: 
+      case 2:
         this.SetView("manager");
         break;
-      case 3: 
+      case 3:
         this.SetView("sales");
         break;
-      default: 
+      default:
         this.SetView("home");
     }
   };
@@ -146,6 +164,11 @@ class App extends Component {
   handleEditProfile = () => {
     this.SetView("editProfile");
   }
+
+  showAllProds = () => {
+    this.SetView("allProds");
+  }
+
   componentDidMount() {
     const userSession = cookies.get("userSession");
     if (userSession) {

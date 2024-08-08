@@ -1,5 +1,5 @@
 import React from 'react';
-import '../customStyles/AdminView.css';
+import '../customStyles/EmployeeView.css';
 
 const AdminView = ({ user, handleManageUsers, showAllUsers, handleEditProfile }) => {
   return (

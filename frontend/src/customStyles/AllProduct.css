@@ -1,0 +1,28 @@
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Container for the table */
+.table-container {
+    max-height: 25em;
+    overflow-y: auto;  /* Enables vertical scrolling */
+  }
+
+.product-table th,
+.product-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.product-table td{
+    background-color: #bebebe;
+    color: rgb(0, 0, 0);
+    text-emphasis: bold;
+}
+
+.product-table th {
+    background-color: #000000;
+    text-align: left;
+    color: white;
+}
