@@ -5,7 +5,11 @@
   text-decoration: underline;
 }
 
-.manage-users-btn, .view-users-btn, .show-prods-btn {
+.manage-users-btn,
+.view-users-btn,
+.show-prods-btn,
+.add-remove-prods-btn,
+.edit-prods-btn {
   display: flex;
   max-width: 16em;
   min-height: 4em;
@@ -33,7 +37,7 @@
 }
 
 .icon {
-  width: 6em;
+  max-width: 5em;
   height: 4em;
   margin-right: 0.1em;
 }
