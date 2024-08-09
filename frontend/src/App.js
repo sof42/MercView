@@ -17,6 +17,7 @@ import AddRemovePart from "./customComponents/AddRemovePart.js";
 import EditPart from "./customComponents/EditPart.js";
 import ViewAllModels from "./customComponents/ViewAllModels.js";
 import AddRemoveModel from "./customComponents/AddRemoveModel.js";
+import CheckCompatibility from "./customComponents/CheckCompatibility.js";
 import {API_URL} from './customComponents/utils/config.js';
 const cookies = new Cookies();
 
@@ -58,7 +59,8 @@ class App extends Component {
                       addRemovePart = {this.addRemovePart}
                       editPart={this.editPart}
                       viewAllModels={this.viewAllModels}
-                      addRemoveModel={this.addRemoveModel}/> : <HomeView />;
+                      addRemoveModel={this.addRemoveModel}
+                      checkCompatibility = {this.checkCompatibility}/> : <HomeView />;
       case "sales":
         return roleId === 3 ? <SalesView
                       user={userStatus.user}
@@ -87,6 +89,9 @@ class App extends Component {
                       handleBack = {this.handleBack}/>;
       case "addRemoveModel":
         return <AddRemoveModel
+                      handleBack = {this.handleBack}/>;
+      case "checkCompatibility":
+        return <CheckCompatibility
                       handleBack = {this.handleBack}/>;
       default:
         return <HomeView />; // Fallback
@@ -120,7 +125,6 @@ class App extends Component {
       .post(API_URL + "/users/login", credentials, { withCredentials: true })
       .then((response) => {
         if (response.data.message === 'Login successful') {
-          console.log("API Response:", response.data); // Log the API response for debugging
           // Set user state and cookies
           this.QSetUser({
             userId: response.data.userId,
@@ -164,6 +168,10 @@ class App extends Component {
 
   editPart = () => {
     this.SetView("editPart");
+  }
+
+  checkCompatibility = () => {
+    this.SetView("checkCompatibility");
   }
 
   addRemovePart = () => {

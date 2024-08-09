@@ -108,6 +108,23 @@ parts.delete('/remove/:part_number', async (req, res) => {
   }
 });
 
+// Get compatible car models for a part
+parts.get('/compatibility/:part_number', async (req, res) => {
+  try {
+      const part_number = req.params.part_number;
+      const compatibility = await db.getPartCompatibility(part_number);
+
+      if (compatibility.length > 0) {
+          res.json(compatibility);
+      } else {
+          res.status(404).json({ message: "No compatible car models found for this part" });
+      }
+  } catch (error) {
+      console.error("Error fetching part compatibility:", error);
+      res.status(500).json({ error: "An error occurred while fetching part compatibility" });
+  }
+});
+
 //edit a part
 parts.put('/edit/:part_number', async (req, res) => {
   const part_number = req.params.part_number;

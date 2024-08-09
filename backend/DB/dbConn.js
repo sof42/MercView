@@ -192,6 +192,23 @@ dataPool.editPart = (part_number, part_description, quantity, country_of_origin,
   });
 };
 
+dataPool.getPartCompatibility = (part_number) => {
+  return new Promise((resolve, reject) => {
+      const query = `
+          SELECT cm.car_model_name
+          FROM MP_Compatibility mc
+          JOIN Car_Model cm ON mc.car_model_id = cm.car_model_id
+          WHERE mc.part_number = ?;
+      `;
+      conn.query(query, [part_number], (err, results) => {
+          if (err) {
+              return reject(err);
+          }
+          return resolve(results);
+      });
+  });
+};
+
 dataPool.AuthUser=(username) => {
     return new Promise ((resolve, reject)=>{
        conn.query('SELECT * FROM Users WHERE username = ?', username, (err,res, fields)=>{

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../customStyles/EmployeeView.css';
 
-const ManagerView = ({ user, handleEditProfile, showAllProds, addRemovePart, editPart, viewAllModels, addRemoveModel }) => {
+const ManagerView = ({ user, handleEditProfile, showAllProds, addRemovePart, editPart, viewAllModels, addRemoveModel, checkCompatibility }) => {
   return (
     <div>
       <h2>Manager Dashboard</h2>
@@ -21,13 +21,17 @@ const ManagerView = ({ user, handleEditProfile, showAllProds, addRemovePart, edi
               <img src="/assets/editParts.png" className="icon" alt="Edit Parts" />
               Edit Part Data
             </button>
-            <button onClick={viewAllModels} className="btn add-remove-model-btn">
+            <button onClick={viewAllModels} className="btn view-model-btn">
               <img src="/assets/carModels.png" className="icon" alt="View all Models" />
               View All Car Models
             </button>
             <button onClick={addRemoveModel} className="btn add-remove-model-btn">
               <img src="/assets/addRemMod.png" className="icon" alt=" Add/Remove a Car Model" />
               Add/Remove a Car Model
+            </button>
+            <button onClick={checkCompatibility} className="btn compatibility-btn">
+              <img src="/assets/compatibility.png" className="icon" alt=" Check Compatibility" />
+              Check Compatibility
             </button>
           </div>
         </div>
