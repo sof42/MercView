@@ -5,11 +5,18 @@
   text-decoration: underline;
 }
 
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .manage-users-btn,
 .view-users-btn,
 .show-prods-btn,
 .add-remove-prods-btn,
-.edit-prods-btn {
+.edit-prods-btn,
+.add-remove-model-btn {
   display: flex;
   max-width: 16em;
   min-height: 4em;
@@ -38,6 +45,6 @@
 
 .icon {
   max-width: 5em;
-  height: 4em;
+  max-height: 4em;
   margin-right: 0.1em;
 }

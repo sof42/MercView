@@ -74,7 +74,6 @@ const EditPart = ({ handleBack }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log('Input change:', name, value); // Log input changes
     setPartData((prevState) => ({
       ...prevState,
       [name]: value,

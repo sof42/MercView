@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+
+.car-models-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  #exportPDFButton, #exportCSVButton{
+    margin-left: 3em;
+    font-size: 1.3em;
+    background-color: #767676;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+  }
+  .car-models-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .car-models-table th, .car-models-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .car-models-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  

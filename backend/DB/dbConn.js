@@ -26,9 +26,27 @@ dataPool.allParts = () => {
         })
     };
 
+dataPool.allModels = () => {
+    return new Promise((resolve, reject) =>{
+      conn.query(`SELECT * FROM Car_Model`, (err, res)=>{
+          if(err){return reject(err)}
+          return resolve(res)
+          })
+      })
+  };
+
 dataPool.onePart=(part_number) => {
     return new Promise ((resolve, reject)=>{
       conn.query(`SELECT * FROM Car_Parts WHERE part_number = ?`, part_number, (err, res)=>{
+        if(err){return reject(err)}
+        return resolve(res)
+      });
+    });
+  };
+
+dataPool.oneModel=(car_model_id) => {
+    return new Promise ((resolve, reject)=>{
+      conn.query(`SELECT * FROM Car_Model WHERE car_model_id = ?`, car_model_id, (err, res)=>{
         if(err){return reject(err)}
         return resolve(res)
       });
@@ -59,6 +77,69 @@ dataPool.onePart=(part_number) => {
       });
     });
   };
+
+  // Check if a car model already exists
+dataPool.checkCarModelExists = (car_model_name) => {
+  return new Promise((resolve, reject) => {
+      const query = `
+          SELECT * FROM Car_Model
+          WHERE car_model_name = ?
+      `;
+      const values = [car_model_name];
+
+      conn.query(query, values, (err, results) => {
+          if (err) {
+              console.error("Error checking car model existence:", err);
+              return reject(err);
+          }
+          // If there are results, the car model exists
+          resolve(results.length > 0);
+      });
+  });
+};
+
+  dataPool.insertCarModel = (car_model_name) => {
+    return new Promise((resolve, reject) => {
+      // First, check if the car model already exists
+      const checkQuery = `
+        SELECT car_model_id FROM Car_Model
+        WHERE car_model_name = ?
+      `;
+      conn.query(checkQuery, [car_model_name], (checkErr, checkResults) => {
+        if (checkErr) {
+          console.error("Error checking car model existence:", checkErr);
+          return reject(checkErr);
+        }
+  
+        if (checkResults.length > 0) {
+          // If model exists, return a message indicating so
+          return resolve({
+            message: 'Car model already exists',
+            car_model_id: checkResults[0].car_model_id,
+            car_model_name
+          });
+        }
+  
+        // Otherwise, insert the new car model
+        const insertQuery = `
+          INSERT INTO Car_Model (car_model_name)
+          VALUES (?)
+        `;
+        conn.query(insertQuery, [car_model_name], (insertErr, insertResults) => {
+          if (insertErr) {
+            console.error("Error inserting car model:", insertErr);
+            return reject(insertErr);
+          }
+          resolve({
+            car_model_id: insertResults.insertId,
+            car_model_name
+          });
+        });
+      });
+    });
+  };
+  
+  
   
 dataPool.deletePart = (part_number) => {
     return new Promise((resolve, reject) => {
@@ -75,6 +156,24 @@ dataPool.deletePart = (part_number) => {
         });
     });
 }
+
+dataPool.deleteCarModel = (car_model_id) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      DELETE FROM Car_Model
+      WHERE car_model_id = ?
+    `;
+    const values = [car_model_id];
+
+    conn.query(query, values, (err, results) => {
+      if (err) {
+        console.error("Error deleting car model:", err);
+        return reject(err);
+      }
+      resolve(results);
+    });
+  });
+};
 
 dataPool.editPart = (part_number, part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg) => {
   return new Promise((resolve, reject) => {

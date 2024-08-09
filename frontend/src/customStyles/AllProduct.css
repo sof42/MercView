@@ -1,18 +1,21 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: auto; /* Allows the page to be scrollable */
+  }
 .product-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-/* Container for the table */
-.table-container {
-    max-height: 25em;
-    overflow-y: auto;  /* Enables vertical scrolling */
-  }
-
 .product-table th,
 .product-table td {
     border: 1px solid #ddd;
     padding: 8px;
+}
+#buttonDiv{
+    margin-top: 1em;
 }
 
 .product-table td{

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import Papa from 'papaparse';
 import '../customStyles/AllProduct.css';
 
 const AllProducts = ({ handleBack }) => {
@@ -15,9 +18,43 @@ const AllProducts = ({ handleBack }) => {
       });
   }, []);
 
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text("All Products", 14, 16);
+
+    const tableColumn = ["Part Number", "Description", "Quantity", "Country of Origin", "Price per Unit (€)", "Weight per Unit (kg)"];
+    const tableRows = products.map(product => [
+      product.part_number,
+      product.part_description,
+      product.quantity,
+      product.country_of_origin,
+      product.euro_price_per_unit,
+      product.weight_per_unit_kg,
+    ]);
+
+    doc.autoTable(tableColumn, tableRows, { startY: 30 });
+    doc.save("products.pdf");
+  };
+
+  const exportToCSV = () => {
+    const csv = Papa.unparse(products, {
+      header: true,
+      columns: ["part_number", "part_description", "quantity", "country_of_origin", "euro_price_per_unit", "weight_per_unit_kg"],
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'products.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div>
-      <h2>Product Data 
+      <h2>
+        Product Data
         <button onClick={handleBack} id='backButton1'>Back to Dashboard</button>
       </h2>
       <br />
@@ -46,6 +83,10 @@ const AllProducts = ({ handleBack }) => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div id='buttonDiv'>
+        <button onClick={exportToPDF} id="exportPDFButton">Export to PDF</button>
+        <button onClick={exportToCSV} id="exportCSVButton">Export to CSV</button>
       </div>
     </div>
   );

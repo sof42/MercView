@@ -15,6 +15,8 @@ import EditProfile from "./customComponents/EditProfile.js";
 import AllProducts from "./customComponents/AllProducts.js";
 import AddRemovePart from "./customComponents/AddRemovePart.js";
 import EditPart from "./customComponents/EditPart.js";
+import ViewAllModels from "./customComponents/ViewAllModels.js";
+import AddRemoveModel from "./customComponents/AddRemoveModel.js";
 import {API_URL} from './customComponents/utils/config.js';
 const cookies = new Cookies();
 
@@ -54,7 +56,9 @@ class App extends Component {
                       handleEditProfile = {this.handleEditProfile}
                       showAllProds = {this.showAllProds}
                       addRemovePart = {this.addRemovePart}
-                      editPart={this.editPart}/> : <HomeView />;
+                      editPart={this.editPart}
+                      viewAllModels={this.viewAllModels}
+                      addRemoveModel={this.addRemoveModel}/> : <HomeView />;
       case "sales":
         return roleId === 3 ? <SalesView
                       user={userStatus.user}
@@ -77,6 +81,12 @@ class App extends Component {
                       handleBack = {this.handleBack}/>;
       case "editPart":
         return <EditPart
+                      handleBack = {this.handleBack}/>;
+      case "viewAllModels":
+        return <ViewAllModels
+                      handleBack = {this.handleBack}/>;
+      case "addRemoveModel":
+        return <AddRemoveModel
                       handleBack = {this.handleBack}/>;
       default:
         return <HomeView />; // Fallback
@@ -146,6 +156,14 @@ class App extends Component {
 
   addRemovePart = () => {
     this.SetView("addRemovePart");
+  }
+
+  viewAllModels = () => {
+    this.SetView("viewAllModels");
+  }
+
+  addRemoveModel = () => {
+    this.SetView("addRemoveModel");
   }
 
   handleBack = () => {
