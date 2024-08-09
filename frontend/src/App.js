@@ -115,12 +115,23 @@ class App extends Component {
   };
 
   handleLogin = (credentials) => {
+    console.log("Logging in with credentials:", credentials);
     axios
       .post(API_URL + "/users/login", credentials, { withCredentials: true })
       .then((response) => {
-        if (response.data.loggedIn) {
-          this.QSetUser(response.data.user);
-          console.log(userStatus.user)
+        if (response.data.message === 'Login successful') {
+          console.log("API Response:", response.data); // Log the API response for debugging
+          // Set user state and cookies
+          this.QSetUser({
+            userId: response.data.userId,
+            username: credentials.username,
+            roleId: response.data.roleId,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+          });
+        } else {
+          // Show error message
+          toast.error(response.data.message);
         }
       })
       .catch((error) => {
@@ -128,6 +139,7 @@ class App extends Component {
         toast.error("Login failed!");
       });
   };
+  
 
   handleLogout = () => {
     axios

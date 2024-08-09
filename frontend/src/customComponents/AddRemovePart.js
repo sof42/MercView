@@ -28,6 +28,7 @@ const AddRemovePart = ({ handleBack }) => {
   const [parts, setParts] = useState([]);
   const [partNumberToRemove, setPartNumberToRemove] = useState('');
   const [partNumbers, setPartNumbers] = useState([]);
+  const [partDescription, setPartDescription] = useState(''); // Added state for part description
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +46,7 @@ const AddRemovePart = ({ handleBack }) => {
       return;
     }
 
-    axios.post(API_URL + '/parts/insert', {
+    axios.post(`${API_URL}/parts/insert`, {
       part_description: partDescription,
       quantity,
       country_of_origin: countryOfOrigin,
@@ -78,7 +79,7 @@ const AddRemovePart = ({ handleBack }) => {
 
   const handleRemovePart = async () => {
     try {
-      const response = await axios.delete(API_URL + `/parts/remove/${partNumberToRemove}`);
+      const response = await axios.delete(`${API_URL}/parts/remove/${partNumberToRemove}`);
 
       if (response.status === 200) {
         toast.success('Part removed successfully!');
@@ -95,9 +96,35 @@ const AddRemovePart = ({ handleBack }) => {
     }
   };
 
+  const handlePartNumberChange = (e) => {
+    const selectedPartNumber = e.target.value;
+    setPartNumberToRemove(selectedPartNumber);
+
+    if (selectedPartNumber) {
+      axios.get(`${API_URL}/parts/${selectedPartNumber}`)
+        .then(response => {
+          const data = response.data;
+          if (Array.isArray(data) && data.length > 0) {
+            const part = data[0];
+            setPartDescription(part.part_description || '');
+          } else {
+            setPartDescription('');
+            console.error('Unexpected data format:', data);
+            toast.error('Failed to fetch part data.');
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching part data:", error.message);
+          toast.error('Failed to fetch part data.');
+        });
+    } else {
+      setPartDescription('');
+    }
+  };
+
   const fetchParts = () => {
-    axios.get(API_URL + '/parts')
-      .then(response => {  
+    axios.get(`${API_URL}/parts`)
+      .then(response => {
         const partsData = response.data;
         if (Array.isArray(partsData)) {
           setParts(partsData);
@@ -180,7 +207,7 @@ const AddRemovePart = ({ handleBack }) => {
           <select
             id="remove-part-number-input"
             value={partNumberToRemove}
-            onChange={(e) => setPartNumberToRemove(e.target.value)}
+            onChange={handlePartNumberChange} // Ensure this function is called
             className="input-field"
           >
             <option value="">Select Part Number</option>
@@ -188,6 +215,14 @@ const AddRemovePart = ({ handleBack }) => {
               <option key={index} value={partNumber}>{partNumber}</option>
             ))}
           </select>
+
+          {partDescription && (
+            <div id="part-description-box">
+              <h5>Part Description:</h5>
+              <p>{partDescription}</p>
+            </div>
+          )}
+
           <button id="remove-part-button" onClick={handleRemovePart} className="button">Remove Part</button>
         </div>
 

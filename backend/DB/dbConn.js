@@ -279,6 +279,69 @@ dataPool.editUser = (username, password, first_name, last_name, employee_id) => 
   });
 };
 
+dataPool.logPartHistory = (partDetails, actionType) => {
+  return new Promise((resolve, reject) => {
+    const {
+      part_number,
+      old_part_description,
+      old_quantity,
+      old_country_of_origin,
+      old_euro_price_per_unit,
+      old_weight_per_unit_kg,
+      new_part_description,
+      new_quantity,
+      new_country_of_origin,
+      new_euro_price_per_unit,
+      new_weight_per_unit_kg
+    } = partDetails;
+
+    let query = `
+      INSERT INTO PartHistory (
+        part_number, 
+        old_part_description, 
+        old_quantity, 
+        old_country_of_origin, 
+        old_euro_price_per_unit, 
+        old_weight_per_unit_kg,
+        new_part_description, 
+        new_quantity, 
+        new_country_of_origin, 
+        new_euro_price_per_unit, 
+        new_weight_per_unit_kg,
+        changed_at,
+        action_type
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    let values = [
+      part_number,
+      old_part_description || null,
+      old_quantity || null,
+      old_country_of_origin || null,
+      old_euro_price_per_unit || null,
+      old_weight_per_unit_kg || null,
+      new_part_description || null,
+      new_quantity || null,
+      new_country_of_origin || null,
+      new_euro_price_per_unit || null,
+      new_weight_per_unit_kg || null,
+      new Date(), // current timestamp
+      actionType || null
+    ];
+
+    console.log('Executing SQL Query:', query);
+    console.log('With Values:', values);
+
+    conn.query(query, values, (err, results) => {
+      if (err) {
+        console.error('Error logging part history:', err);
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
+
 
 
         

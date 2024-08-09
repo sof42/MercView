@@ -32,6 +32,7 @@ class LoginView extends Component {
     axios.post(API_URL + "/users/login", { username, password }, { withCredentials: true })
       .then(res => {
         if (res.status === 200) {
+          console.log(res.data);
           toast.success("Logged in successfully", {
             position: "top-right",
             autoClose: 5000,
