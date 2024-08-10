@@ -41,7 +41,6 @@ const CheckCompatibility = ({ handleBack }) => {
 
                 // Fetch part compatibility
                 const compatibilityResponse = await axios.get(API_URL + `/parts/compatibility/${selectedPartNumber}`);
-                console.log("Compatibility response:", compatibilityResponse.data); // Log the response data
                 if (Array.isArray(compatibilityResponse.data)) {
                     setCompatibility(compatibilityResponse.data);
                     setError(null);

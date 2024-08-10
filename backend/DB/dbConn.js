@@ -359,7 +359,21 @@ dataPool.logPartHistory = (partDetails, actionType) => {
 };
 
 
-
+dataPool.getPartHistory = (part_number) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT * FROM PartHistory
+      WHERE part_number = ?
+      ORDER BY changed_at DESC
+    `;
+    conn.query(query, [part_number], (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
 
         
 conn.connect((err) => {

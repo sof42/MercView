@@ -18,6 +18,7 @@ import EditPart from "./customComponents/EditPart.js";
 import ViewAllModels from "./customComponents/ViewAllModels.js";
 import AddRemoveModel from "./customComponents/AddRemoveModel.js";
 import CheckCompatibility from "./customComponents/CheckCompatibility.js";
+import InventoryHistory from "./customComponents/InventoryHistory.js";
 import {API_URL} from './customComponents/utils/config.js';
 const cookies = new Cookies();
 
@@ -60,11 +61,13 @@ class App extends Component {
                       editPart={this.editPart}
                       viewAllModels={this.viewAllModels}
                       addRemoveModel={this.addRemoveModel}
-                      checkCompatibility = {this.checkCompatibility}/> : <HomeView />;
+                      checkCompatibility = {this.checkCompatibility}
+                      displayHistory = {this.displayHistory}/> : <HomeView />;
       case "sales":
         return roleId === 3 ? <SalesView
                       user={userStatus.user}
-                      handleEditProfile={this.handleEditProfile}/> : <HomeView />;
+                      handleEditProfile={this.handleEditProfile}
+                      checkCompatibility={this.checkCompatibility}/> : <HomeView />;
       case "addRemoveUser":
         return <AddRemoveUser
                       handleBack = {this.handleBack}/>;
@@ -92,6 +95,9 @@ class App extends Component {
                       handleBack = {this.handleBack}/>;
       case "checkCompatibility":
         return <CheckCompatibility
+                      handleBack = {this.handleBack}/>;
+      case "displayHistory":
+        return <InventoryHistory
                       handleBack = {this.handleBack}/>;
       default:
         return <HomeView />; // Fallback
@@ -172,6 +178,9 @@ class App extends Component {
 
   checkCompatibility = () => {
     this.SetView("checkCompatibility");
+  }
+  displayHistory = () => {
+    this.SetView("displayHistory");
   }
 
   addRemovePart = () => {

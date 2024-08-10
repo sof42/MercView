@@ -34,6 +34,7 @@ const port = process.env.PORT || 8162;
 const parts = require('./routes/parts.js');
 const users = require('./routes/users.js');
 const models = require('./routes/models.js');
+const history = require('./routes/history.js');
 
 app.get('/', (req, res) => {
     res.send('MUST BE CHANGED TO A STATIC FILE');
@@ -42,6 +43,7 @@ app.get('/', (req, res) => {
 app.use("/parts", parts);
 app.use("/users", users);
 app.use("/models", models);
+app.use("/history", history);
 
 app.listen(port, () => {
     console.log(`Successfully running on port: ${port}`);

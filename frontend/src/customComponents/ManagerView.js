@@ -1,7 +1,9 @@
 import React from 'react';
 import '../customStyles/EmployeeView.css';
 
-const ManagerView = ({ user, handleEditProfile, showAllProds, addRemovePart, editPart, viewAllModels, addRemoveModel, checkCompatibility }) => {
+const ManagerView = ({  user, handleEditProfile, showAllProds, addRemovePart,
+                        editPart, viewAllModels, addRemoveModel, checkCompatibility,
+                        displayHistory}) => {
   return (
     <div>
       <h2>Manager Dashboard</h2>
@@ -30,8 +32,12 @@ const ManagerView = ({ user, handleEditProfile, showAllProds, addRemovePart, edi
               Add/Remove a Car Model
             </button>
             <button onClick={checkCompatibility} className="btn compatibility-btn">
-              <img src="/assets/compatibility.png" className="icon" alt=" Check Compatibility" />
+              <img src="/assets/compatibility.png" className="icon" alt="Check Compatibility" />
               Check Compatibility
+            </button>
+            <button onClick={displayHistory} className="btn compatibility-btn">
+              <img src="/assets/history.png" className="icon" alt="History" />
+              History of inventory changes
             </button>
           </div>
         </div>

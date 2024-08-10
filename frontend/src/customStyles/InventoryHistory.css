@@ -1,0 +1,37 @@
+/* InventoryHistory.css */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: auto; /* Allows the page to be scrollable */
+  }
+.go-back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #6e6e6e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.go-back-button:hover {
+    background-color: #424242;
+}
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th, .history-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.history-table th {
+    background-color: #f4f4f4;
+}
+
+select {
+    margin: 10px 0;
+}

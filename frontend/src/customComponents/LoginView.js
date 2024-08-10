@@ -72,7 +72,7 @@ class LoginView extends Component {
         <div className="login-container">
           <div className="card">
             <div className="card-header">
-              <h2>Login to MercView</h2>
+              <h2 id='title'>Login to MercView</h2>
             </div>
             <div className="card-body">
               <p className="info-message">
