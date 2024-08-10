@@ -1,0 +1,20 @@
+.alerts-container {
+    margin-top: 20px;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.alert.critical {
+    background-color: #ffdddd;
+    color: #d8000c;
+}
+
+.alert.warning {
+    background-color: #fff3cd;
+    color: #856404;
+}

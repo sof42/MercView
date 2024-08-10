@@ -67,7 +67,9 @@ class App extends Component {
         return roleId === 3 ? <SalesView
                       user={userStatus.user}
                       handleEditProfile={this.handleEditProfile}
-                      checkCompatibility={this.checkCompatibility}/> : <HomeView />;
+                      checkCompatibility={this.checkCompatibility}
+                      showAllProds = {this.showAllProds}
+                      viewAllModels={this.viewAllModels}/> : <HomeView />;
       case "addRemoveUser":
         return <AddRemoveUser
                       handleBack = {this.handleBack}/>;
