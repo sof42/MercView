@@ -1,20 +1,28 @@
 .alerts-container {
-    margin-top: 20px;
-}
-
-.alert {
+    position: fixed;
+    top: 10em;
+    right: 3em;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1000;
+  }
+  
+  .alert {
     padding: 10px;
     border-radius: 5px;
     margin: 5px 0;
     font-size: 14px;
-}
-
-.alert.critical {
+  }
+  
+  .alert.critical {
     background-color: #ffdddd;
     color: #d8000c;
-}
-
-.alert.warning {
+  }
+  
+  .alert.warning {
     background-color: #fff3cd;
     color: #856404;
-}
+  }
+  

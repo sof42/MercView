@@ -375,6 +375,72 @@ dataPool.getPartHistory = (part_number) => {
   });
 };
 
+dataPool.updatePartCompatibility = (part_number, model_ids) => {
+  return new Promise((resolve, reject) => {
+    // Begin a transaction to ensure atomicity
+    conn.beginTransaction((err) => {
+      if (err) {
+        return reject(err);
+      }
+
+      // Step 1: Check existing mappings
+      conn.query(
+        `SELECT car_model_id FROM MP_Compatibility WHERE part_number = ?`,
+        [part_number],
+        (selectErr, existingMappings) => {
+          if (selectErr) {
+            return conn.rollback(() => reject(selectErr));
+          }
+
+          // Convert existing mappings to a Set for quick lookup
+          const existingMappingsSet = new Set(existingMappings.map(row => `${row.car_model_id}-${part_number}`));
+
+          // Step 2: Determine new mappings to be inserted
+          const newMappings = model_ids
+            .map(model_id => `${model_id}-${part_number}`)
+            .filter(mapping => !existingMappingsSet.has(mapping))
+            .map(mapping => {
+              const [model_id, part_number] = mapping.split('-');
+              return [model_id, part_number];
+            });
+          
+          // No new mappings to insert
+          if (newMappings.length === 0) {
+            return conn.commit((commitErr) => {
+              if (commitErr) {
+                return conn.rollback(() => reject(commitErr));
+              }
+              resolve({ message: 'No new mappings to update.' });
+            });
+          }
+
+          // Step 3: Insert new mappings
+          conn.query(
+            `INSERT INTO MP_Compatibility (car_model_id, part_number) VALUES ?`,
+            [newMappings],
+            (insertErr) => {
+              if (insertErr) {
+                return conn.rollback(() => reject(insertErr));
+              }
+
+              // Commit transaction
+              conn.commit((commitErr) => {
+                if (commitErr) {
+                  return conn.rollback(() => reject(commitErr));
+                }
+                resolve({ message: 'Compatibility mappings updated successfully' });
+              });
+            }
+          );
+        }
+      );
+    });
+  });
+};
+
+
+
+
         
 conn.connect((err) => {
     if(err){

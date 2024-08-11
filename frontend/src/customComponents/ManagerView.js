@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../customStyles/EmployeeView.css';
 import AlertView from './AlertView';
+import '../customStyles/Alerts.css';
 
 const ManagerView = ({
   user, handleEditProfile, showAllProds, addRemovePart,
   editPart, viewAllModels, addRemoveModel, checkCompatibility,
-  displayHistory
+  displayHistory, matchCompatibility
 }) => {
   const [showAlerts, setShowAlerts] = useState(false);
 
@@ -46,21 +47,24 @@ const ManagerView = ({
               <img src="/assets/addRemMod.png" className="icon" alt="Add/Remove a Car Model" />
               Add/Remove a Car Model
             </button>
-            <button onClick={checkCompatibility} className="btn compatibility-btn">
-              <img src="/assets/compatibility.png" className="icon" alt="Check Compatibility" />
-              Check Compatibility
-            </button>
             <button onClick={displayHistory} className="btn history-btn">
               <img src="/assets/history.png" className="icon" alt="History" />
               History of Inventory Changes
             </button>
+            <button onClick={checkCompatibility} className="btn compatibility-btn">
+              <img src="/assets/compatibility.png" className="icon" alt="Check Compatibility" />
+              Check Compatibility
+            </button>
+            <button onClick={matchCompatibility} className="btn match-btn">
+              <img src="/assets/match.png" className="icon" alt="Match Inventory Compatibility" id='match' />
+              Match Inventory Compatibility
+            </button>
           </div>
-
-          {showAlerts && <AlertView />}
-          <button onClick={toggleAlerts} className="btn alerts-btn floating-alerts-btn">
+          <button onClick={toggleAlerts} className="btn alerts-btn floating-alerts-btn1">
             <img src="/assets/alert.png" className="icon" alt="Alerts" id='alertimg'/>
             Alerts
           </button>
+          {showAlerts && <AlertView />}
         </div>
       ) : (
         <p>Loading user information...</p>

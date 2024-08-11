@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../customStyles/EmployeeView.css';
+import '../customStyles/Alerts.css';
+import AlertView from './AlertView';
 
 const SalesView = ({ user, handleEditProfile, checkCompatibility, showAllProds, viewAllModels }) => {
-  console.log('Rendering SalesView Component');
-  console.log('User:', user);
+  const [showAlerts, setShowAlerts] = useState(false);
+
+  const toggleAlerts = () => {
+    setShowAlerts(prevState => !prevState);
+  };
 
   return (
     <div className="sales-view">
@@ -30,6 +35,11 @@ const SalesView = ({ user, handleEditProfile, checkCompatibility, showAllProds, 
               Check Compatibility
             </button>
           </div>
+          <button onClick={toggleAlerts} className="btn alerts-btn floating-alerts-btn">
+            <img src="/assets/alert.png" className="icon" alt="Alerts" id='alertimg'/>
+            Alerts
+          </button>
+          {showAlerts && <AlertView />}
         </div>
       ) : (
         <p>Loading user information...</p>

@@ -19,6 +19,7 @@ import ViewAllModels from "./customComponents/ViewAllModels.js";
 import AddRemoveModel from "./customComponents/AddRemoveModel.js";
 import CheckCompatibility from "./customComponents/CheckCompatibility.js";
 import InventoryHistory from "./customComponents/InventoryHistory.js";
+import MatchCompatibleInventory from "./customComponents/MatchCompatibleInventory.js";
 import {API_URL} from './customComponents/utils/config.js';
 const cookies = new Cookies();
 
@@ -62,7 +63,8 @@ class App extends Component {
                       viewAllModels={this.viewAllModels}
                       addRemoveModel={this.addRemoveModel}
                       checkCompatibility = {this.checkCompatibility}
-                      displayHistory = {this.displayHistory}/> : <HomeView />;
+                      displayHistory = {this.displayHistory}
+                      matchCompatibility = {this.matchCompatibility}/> : <HomeView />;
       case "sales":
         return roleId === 3 ? <SalesView
                       user={userStatus.user}
@@ -100,6 +102,9 @@ class App extends Component {
                       handleBack = {this.handleBack}/>;
       case "displayHistory":
         return <InventoryHistory
+                      handleBack = {this.handleBack}/>;
+      case "matchCompatibility":
+        return <MatchCompatibleInventory
                       handleBack = {this.handleBack}/>;
       default:
         return <HomeView />; // Fallback
@@ -181,6 +186,8 @@ class App extends Component {
   checkCompatibility = () => {
     this.SetView("checkCompatibility");
   }
+  matchCompatibility = () => {
+    this.SetView("matchCompatibility");}
   displayHistory = () => {
     this.SetView("displayHistory");
   }

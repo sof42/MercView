@@ -17,31 +17,26 @@
 
 .floating-alerts-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #f8f9fa;
+  min-width: 14em;
+  top: 6em;
+  right: 3em;
+  background-color: #faf9e7;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   z-index: 10;
 }
 
-.alerts-container {
+.floating-alerts-btn1 {
   position: absolute;
-  top: 50px;
-  right: 10px;
-  background-color: #ffffff;
+  min-width: 14em;
+  top: 0em;
+  right: -16.5em;
+  background-color: #faf9e7;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  z-index: 5;
-}
-
-.alert {
-  padding: 10px;
-  border-radius: 5px;
-  margin: 5px 0;
-  font-size: 14px;
+  z-index: 10;
 }
 
 #alertimg{
@@ -49,35 +44,12 @@
   max-height: 3em;
 }
 
-.alert.critical {
-  background-color: #ffdddd;
-  color: #d8000c;
-}
-#salesalert{
-  z-index: 10;
-}
-
-.alert.warning {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-.alerts-btn{
-  display: flex;
-  max-width: 15em;
-  min-height: 4em;
-  max-height: 4em;
-  min-width: 15em;
-  justify-content: center;
-  background-color: #fdf8e2;
-  border: 2px solid red;
-}
 
 .manage-users-btn, .view-users-btn,
 .show-prods-btn, .add-remove-prods-btn,
 .edit-prods-btn, .view-model-btn,
 .add-remove-model-btn, .compatibility-btn,
-.history-btn {
+.history-btn, .match-btn {
   display: flex;
   max-width: 16em;
   min-height: 4em;
@@ -103,7 +75,9 @@
 .manage-users-btn:hover, .view-users-btn:hover .show-prods-btn:hover {
   background-color: #7e7e7f;
 }
-
+#match{
+  max-height: 3em;
+}
 .icon {
   max-width: 5em;
   max-height: 4em;

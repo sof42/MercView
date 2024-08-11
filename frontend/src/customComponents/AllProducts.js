@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {API_URL} from './utils/config';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Papa from 'papaparse';
@@ -9,7 +10,7 @@ const AllProducts = ({ handleBack }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://88.200.63.148:8162/parts')
+    axios.get(API_URL + '/parts')
       .then(response => {
         setProducts(response.data);
       })

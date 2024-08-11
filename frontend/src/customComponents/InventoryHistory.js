@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {API_URL} from './utils/config';
 import '../customStyles/InventoryHistory.css';
 
 const InventoryHistory = ({ handleBack }) => {
@@ -9,7 +10,7 @@ const InventoryHistory = ({ handleBack }) => {
 
     // Fetch list of part numbers for the dropdown
     useEffect(() => {
-        axios.get('http://88.200.63.148:8162/parts') // Adjust the endpoint if needed
+        axios.get(API_URL + '/parts') // Adjust the endpoint if needed
             .then(response => {
                 setPartNumbers(response.data.map(part => part.part_number));
             })
@@ -21,7 +22,7 @@ const InventoryHistory = ({ handleBack }) => {
     // Fetch history when partNumber changes
     useEffect(() => {
         if (partNumber) {
-            axios.get(`http://88.200.63.148:8162/history/${partNumber}`)
+            axios.get(API_URL + `/history/${partNumber}`)
                 .then(response => {
                     setHistory(response.data);
                 })

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {API_URL} from './utils/config';
 import '../customStyles/Alerts.css';
 
 const AlertView = () => {
@@ -7,10 +8,9 @@ const AlertView = () => {
 
   useEffect(() => {
     // Fetch the list of parts and their quantities
-    axios.get('http://88.200.63.148:8162/parts')
+    axios.get(API_URL + '/parts')
       .then(response => {
         const parts = response.data;
-        console.log("Fetched parts:", parts); // Debug log
 
         const newAlerts = parts.map(part => {
           const quantity = part.quantity;
@@ -22,7 +22,6 @@ const AlertView = () => {
           return null;
         }).filter(alert => alert !== null);
 
-        console.log("Processed alerts:", newAlerts); // Debug log
         setAlerts(newAlerts);
       })
       .catch(error => {

@@ -177,5 +177,21 @@ parts.put('/edit/:part_number', async (req, res) => {
   }
 });
 
+parts.post('/compatibility', async (req, res) => {
+    const { parts, models } = req.body;
+    console.log(req.body);
+  
+    try {
+        // Loop through all parts and update compatibility mappings
+        for (const part of parts) {
+            await db.updatePartCompatibility(part, models);
+        }
+        res.status(200).send("Compatibility mappings saved");
+    } catch (error) {
+        console.error("Error saving compatibility:", error);
+        res.status(500).send("Error saving compatibility");
+    }
+});
+
 
 module.exports = parts;

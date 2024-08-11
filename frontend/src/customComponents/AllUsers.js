@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {API_URL} from './utils/config';
 import Papa from 'papaparse';  // For CSV export
 import jsPDF from 'jspdf';  // For PDF export
 import '../customStyles/AllUsers.css';
@@ -8,7 +9,7 @@ const AllUsers = ({ handleBack }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get('http://88.200.63.148:8162/users')
+    axios.get(API_URL + '/users')
       .then(response => {
         setUsers(response.data);
       })
