@@ -1,0 +1,76 @@
+#part-history-report {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative; /* Ensure relative positioning for button placement */
+}
+
+#back-btn {
+    background-color: #777777;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute; /* Absolute positioning to place the button */
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+#dropdown-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px; /* Space between label and dropdown */
+}
+
+#dropdown-container label {
+    font-size: 16px;
+}
+
+#part-select {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+#chart-container {
+    margin: 20px 0;
+    position: relative;
+}
+
+#chart-container canvas {
+    width: 100% !important;
+    height: 400px !important;
+}
+
+#save-report {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#save-report-btn {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#save-report input {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    flex-grow: 1;
+}

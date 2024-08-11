@@ -7,7 +7,7 @@ const AdminView = ({ user, handleManageUsers, showAllUsers, handleEditProfile })
       <h2>Admin Dashboard</h2>
       {user ? (
         <div>
-          <p>Welcome, {user.username}! 
+          <p>Welcome, {user.firstName}!
             <button onClick={handleEditProfile} className="btn edit-profile-btn">
               Edit Profile
             </button>

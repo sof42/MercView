@@ -37,6 +37,7 @@ const AlertView = () => {
         alerts.map((alert, index) => (
           <p key={index} className={`alert ${alert.alertType}`}>
             Alert: Car part with part number: {alert.partNumber} is {alert.alertType === 'critical' ? 'critically low' : 'low'} on stock.
+            With only {alert.alertType === 'critical' ? '< 5' : '< 10'} items left.
           </p>
         ))
       )}

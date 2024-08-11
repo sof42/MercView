@@ -20,6 +20,7 @@ import AddRemoveModel from "./customComponents/AddRemoveModel.js";
 import CheckCompatibility from "./customComponents/CheckCompatibility.js";
 import InventoryHistory from "./customComponents/InventoryHistory.js";
 import MatchCompatibleInventory from "./customComponents/MatchCompatibleInventory.js";
+import Report from "./customComponents/Report.js";
 import {API_URL} from './customComponents/utils/config.js';
 const cookies = new Cookies();
 
@@ -64,7 +65,8 @@ class App extends Component {
                       addRemoveModel={this.addRemoveModel}
                       checkCompatibility = {this.checkCompatibility}
                       displayHistory = {this.displayHistory}
-                      matchCompatibility = {this.matchCompatibility}/> : <HomeView />;
+                      matchCompatibility = {this.matchCompatibility}
+                      generateReport = {this.generateReport}/> : <HomeView />;
       case "sales":
         return roleId === 3 ? <SalesView
                       user={userStatus.user}
@@ -105,6 +107,10 @@ class App extends Component {
                       handleBack = {this.handleBack}/>;
       case "matchCompatibility":
         return <MatchCompatibleInventory
+                      handleBack = {this.handleBack}/>;
+      case "generateReport":
+        return <Report
+                      user={userStatus.user}
                       handleBack = {this.handleBack}/>;
       default:
         return <HomeView />; // Fallback
@@ -157,6 +163,9 @@ class App extends Component {
       });
   };
   
+  generateReport = () => {
+    this.SetView("generateReport");
+  }
 
   handleLogout = () => {
     axios

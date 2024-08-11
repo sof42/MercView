@@ -16,7 +16,7 @@ const SalesView = ({ user, handleEditProfile, checkCompatibility, showAllProds, 
       {user ? (
         <div>
           <p>
-            Welcome, {user.username}!
+            Welcome, {user.firstName}!
             <button onClick={handleEditProfile} className="btn edit-profile-btn">
               (Edit Profile)
             </button>

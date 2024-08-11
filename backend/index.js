@@ -35,6 +35,7 @@ const parts = require('./routes/parts.js');
 const users = require('./routes/users.js');
 const models = require('./routes/models.js');
 const history = require('./routes/history.js');
+const reports = require('./routes/reports.js');
 
 app.get('/', (req, res) => {
     res.send('MUST BE CHANGED TO A STATIC FILE');
@@ -44,6 +45,7 @@ app.use("/parts", parts);
 app.use("/users", users);
 app.use("/models", models);
 app.use("/history", history);
+app.use("/reports", reports);
 
 app.listen(port, () => {
     console.log(`Successfully running on port: ${port}`);

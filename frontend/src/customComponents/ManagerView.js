@@ -6,10 +6,9 @@ import '../customStyles/Alerts.css';
 const ManagerView = ({
   user, handleEditProfile, showAllProds, addRemovePart,
   editPart, viewAllModels, addRemoveModel, checkCompatibility,
-  displayHistory, matchCompatibility
+  displayHistory, matchCompatibility, generateReport
 }) => {
   const [showAlerts, setShowAlerts] = useState(false);
-
   const toggleAlerts = () => {
     setShowAlerts(!showAlerts);
   };
@@ -20,7 +19,7 @@ const ManagerView = ({
       {user ? (
         <div>
           <p>
-            Welcome, {user.username}!
+            Welcome, {user.firstName}!
             <button onClick={handleEditProfile} className="btn edit-profile-btn">
               (Edit Profile)
             </button>
@@ -58,6 +57,10 @@ const ManagerView = ({
             <button onClick={matchCompatibility} className="btn match-btn">
               <img src="/assets/match.png" className="icon" alt="Match Inventory Compatibility" id='match' />
               Match Inventory Compatibility
+            </button>
+            <button onClick={generateReport} className="btn report-btn">
+              <img src="/assets/report.png" className="icon" alt="Generate Report" id='match' />
+              Generate Report
             </button>
           </div>
           <button onClick={toggleAlerts} className="btn alerts-btn floating-alerts-btn1">

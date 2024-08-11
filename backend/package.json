@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^4.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -17,10 +18,12 @@
     "express-session": "^1.18.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^3.10.3",
     "node-session": "^1.2.1",
     "papaparse": "^5.4.1",
     "path": "^0.12.7",
+    "react-chartjs-2": "^5.2.0",
     "react-router-dom": "^6.26.0",
     "react-toastify": "^10.0.5"
   }

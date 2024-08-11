@@ -49,7 +49,7 @@
 .show-prods-btn, .add-remove-prods-btn,
 .edit-prods-btn, .view-model-btn,
 .add-remove-model-btn, .compatibility-btn,
-.history-btn, .match-btn {
+.history-btn, .match-btn, .report-btn {
   display: flex;
   max-width: 16em;
   min-height: 4em;

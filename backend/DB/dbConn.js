@@ -438,8 +438,22 @@ dataPool.updatePartCompatibility = (part_number, model_ids) => {
   });
 };
 
+dataPool.saveReport = (employee_id, report_name, report_data) => {
+  return new Promise((resolve, reject) => {
+      const query = `
+          INSERT INTO Report (employee_id, report_name, report_data)
+          VALUES (?, ?, ?)
+      `;
+      const values = [employee_id, report_name, report_data];
 
-
+      conn.query(query, values, (err, results) => {
+          if (err) {
+              return reject(err);
+          }
+          resolve(results);
+      });
+  });
+};
 
         
 conn.connect((err) => {
