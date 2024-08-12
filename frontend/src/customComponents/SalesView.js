@@ -3,7 +3,9 @@ import '../customStyles/EmployeeView.css';
 import '../customStyles/Alerts.css';
 import AlertView from './AlertView';
 
-const SalesView = ({ user, handleEditProfile, checkCompatibility, showAllProds, viewAllModels }) => {
+const SalesView = ({  user, handleEditProfile, checkCompatibility, showAllProds, editPart,
+                      viewAllModels, generateReport, viewReports
+}) => {
   const [showAlerts, setShowAlerts] = useState(false);
 
   const toggleAlerts = () => {
@@ -26,6 +28,10 @@ const SalesView = ({ user, handleEditProfile, checkCompatibility, showAllProds, 
               <img src="/assets/allProds.png" className="icon" id="allProdsimg" alt="View All Parts" />
               View All Parts
             </button>
+            <button onClick={editPart} className="btn edit-prods-btn">
+              <img src="/assets/editParts.png" className="icon" alt="Edit Parts" />
+              Edit Part Data
+            </button>
             <button onClick={viewAllModels} className="btn view-model-btn">
               <img src="/assets/carModels.png" className="icon" alt="View all Models" />
               View All Car Models
@@ -33,6 +39,14 @@ const SalesView = ({ user, handleEditProfile, checkCompatibility, showAllProds, 
             <button onClick={checkCompatibility} className="btn compatibility-btn">
               <img src="/assets/compatibility.png" className="icon" alt="Check Compatibility" />
               Check Compatibility
+            </button>
+            <button onClick={generateReport} className="btn report-btn">
+              <img src="/assets/report.png" className="icon" alt="Generate Report" id='match' />
+              Generate Report
+            </button>
+            <button onClick={viewReports} className="btn all-report-btn">
+              <img src="/assets/allReps.png" className="icon" alt="View All" id='match' />
+              View All Generated Reports
             </button>
           </div>
           <button onClick={toggleAlerts} className="btn alerts-btn floating-alerts-btn">

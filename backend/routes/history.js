@@ -28,5 +28,4 @@ history.get('/:part_number', async (req, res) => {
     }
   });
 
-
 module.exports = history;

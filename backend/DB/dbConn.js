@@ -15,7 +15,7 @@ dataPool.allUsers = () => {
           return resolve(res)
           })
       })
-  };
+};
 
 dataPool.allParts = () => {
     return new Promise((resolve, reject) =>{
@@ -24,7 +24,7 @@ dataPool.allParts = () => {
             return resolve(res)
             })
         })
-    };
+};
 
 dataPool.allModels = () => {
     return new Promise((resolve, reject) =>{
@@ -33,7 +33,7 @@ dataPool.allModels = () => {
           return resolve(res)
           })
       })
-  };
+};
 
 dataPool.onePart=(part_number) => {
     return new Promise ((resolve, reject)=>{
@@ -42,7 +42,7 @@ dataPool.onePart=(part_number) => {
         return resolve(res)
       });
     });
-  };
+};
 
 dataPool.oneModel=(car_model_id) => {
     return new Promise ((resolve, reject)=>{
@@ -51,9 +51,9 @@ dataPool.oneModel=(car_model_id) => {
         return resolve(res)
       });
     });
-  };
-      
-  dataPool.insertPart = (part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg) => {
+};
+
+dataPool.insertPart = (part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg) => {
     return new Promise((resolve, reject) => {
       const query = `
         INSERT INTO Car_Parts (part_description, quantity, country_of_origin, euro_price_per_unit, weight_per_unit_kg)
@@ -76,15 +76,12 @@ dataPool.oneModel=(car_model_id) => {
         });
       });
     });
-  };
+};
 
-  // Check if a car model already exists
+// Check if a car model already exists
 dataPool.checkCarModelExists = (car_model_name) => {
   return new Promise((resolve, reject) => {
-      const query = `
-          SELECT * FROM Car_Model
-          WHERE car_model_name = ?
-      `;
+      const query = `SELECT * FROM Car_Model WHERE car_model_name = ?`;
       const values = [car_model_name];
 
       conn.query(query, values, (err, results) => {
@@ -101,10 +98,7 @@ dataPool.checkCarModelExists = (car_model_name) => {
   dataPool.insertCarModel = (car_model_name) => {
     return new Promise((resolve, reject) => {
       // First, check if the car model already exists
-      const checkQuery = `
-        SELECT car_model_id FROM Car_Model
-        WHERE car_model_name = ?
-      `;
+      const checkQuery = `SELECT car_model_id FROM Car_Model WHERE car_model_name = ?`;
       conn.query(checkQuery, [car_model_name], (checkErr, checkResults) => {
         if (checkErr) {
           console.error("Error checking car model existence:", checkErr);
@@ -121,10 +115,7 @@ dataPool.checkCarModelExists = (car_model_name) => {
         }
   
         // Otherwise, insert the new car model
-        const insertQuery = `
-          INSERT INTO Car_Model (car_model_name)
-          VALUES (?)
-        `;
+        const insertQuery = `INSERT INTO Car_Model (car_model_name) VALUES (?)`;
         conn.query(insertQuery, [car_model_name], (insertErr, insertResults) => {
           if (insertErr) {
             console.error("Error inserting car model:", insertErr);
@@ -137,15 +128,11 @@ dataPool.checkCarModelExists = (car_model_name) => {
         });
       });
     });
-  };
-  
-  
-  
+};
+
 dataPool.deletePart = (part_number) => {
     return new Promise((resolve, reject) => {
-        const query = `
-            DELETE FROM Car_Parts
-            WHERE part_number = ?`;
+        const query = `DELETE FROM Car_Parts WHERE part_number = ?`;
         const values = [part_number];
 
         conn.query(query, values, (err, results) => {
@@ -159,10 +146,7 @@ dataPool.deletePart = (part_number) => {
 
 dataPool.deleteCarModel = (car_model_id) => {
   return new Promise((resolve, reject) => {
-    const query = `
-      DELETE FROM Car_Model
-      WHERE car_model_id = ?
-    `;
+    const query = `DELETE FROM Car_Model WHERE car_model_id = ?`;
     const values = [car_model_id];
 
     conn.query(query, values, (err, results) => {
@@ -198,8 +182,7 @@ dataPool.getPartCompatibility = (part_number) => {
           SELECT cm.car_model_name
           FROM MP_Compatibility mc
           JOIN Car_Model cm ON mc.car_model_id = cm.car_model_id
-          WHERE mc.part_number = ?;
-      `;
+          WHERE mc.part_number = ?;`;
       conn.query(query, [part_number], (err, results) => {
           if (err) {
               return reject(err);
@@ -216,9 +199,9 @@ dataPool.AuthUser=(username) => {
           return resolve(res);
       });
     });
-  };
+};
 
-  dataPool.getUserById = (employee_id) => {
+dataPool.getUserById = (employee_id) => {
     return new Promise((resolve, reject) => {
       const query = 'SELECT * FROM Users WHERE employee_id = ?';
       const values = [employee_id];
@@ -230,12 +213,11 @@ dataPool.AuthUser=(username) => {
         return resolve(results);
       });
     });
-  };
-  dataPool.addUser = (role_id, first_name, last_name, username, password) => {
+};
+
+dataPool.addUser = (role_id, first_name, last_name, username, password) => {
     return new Promise((resolve, reject) => {
-        const query = `
-            INSERT INTO Users (role_id, first_name, last_name, username, password)
-            VALUES (?, ?, ?, ?, ?)`;
+        const query = `INSERT INTO Users (role_id, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)`;
         const values = [role_id, first_name, last_name, username, password];
 
         conn.query(query, values, (err, results) => {
@@ -253,13 +235,9 @@ dataPool.AuthUser=(username) => {
     });
 };
 
-
-
 dataPool.removeUser = (employee_id) => {
   return new Promise((resolve, reject) => {
-      const query = `
-          DELETE FROM Users
-          WHERE employee_id = ?`;
+      const query = `DELETE FROM Users WHERE employee_id = ?`;
       const values = [employee_id];
 
       conn.query(query, values, (err, results) => {
@@ -299,36 +277,16 @@ dataPool.editUser = (username, password, first_name, last_name, employee_id) => 
 dataPool.logPartHistory = (partDetails, actionType) => {
   return new Promise((resolve, reject) => {
     const {
-      part_number,
-      old_part_description,
-      old_quantity,
-      old_country_of_origin,
-      old_euro_price_per_unit,
-      old_weight_per_unit_kg,
-      new_part_description,
-      new_quantity,
-      new_country_of_origin,
-      new_euro_price_per_unit,
-      new_weight_per_unit_kg
+      part_number, old_part_description, old_quantity, old_country_of_origin,
+      old_euro_price_per_unit, old_weight_per_unit_kg, new_part_description,
+      new_quantity, new_country_of_origin, new_euro_price_per_unit, new_weight_per_unit_kg
     } = partDetails;
 
-    let query = `
-      INSERT INTO PartHistory (
-        part_number, 
-        old_part_description, 
-        old_quantity, 
-        old_country_of_origin, 
-        old_euro_price_per_unit, 
-        old_weight_per_unit_kg,
-        new_part_description, 
-        new_quantity, 
-        new_country_of_origin, 
-        new_euro_price_per_unit, 
-        new_weight_per_unit_kg,
-        changed_at,
-        action_type
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    let query = `INSERT INTO PartHistory (
+        part_number, old_part_description, old_quantity, old_country_of_origin,
+        old_euro_price_per_unit, old_weight_per_unit_kg, new_part_description,
+        new_quantity, new_country_of_origin, new_euro_price_per_unit, new_weight_per_unit_kg
+        changed_at, action_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     let values = [
       part_number,
       old_part_description || null,
@@ -358,14 +316,9 @@ dataPool.logPartHistory = (partDetails, actionType) => {
   });
 };
 
-
 dataPool.getPartHistory = (part_number) => {
   return new Promise((resolve, reject) => {
-    const query = `
-      SELECT * FROM PartHistory
-      WHERE part_number = ?
-      ORDER BY changed_at DESC
-    `;
+    const query = `SELECT * FROM PartHistory WHERE part_number = ? ORDER BY changed_at DESC`;
     conn.query(query, [part_number], (err, results) => {
       if (err) {
         return reject(err);
@@ -441,9 +394,7 @@ dataPool.updatePartCompatibility = (part_number, model_ids) => {
 dataPool.saveReport = (employee_id, report_name, report_data) => {
   return new Promise((resolve, reject) => {
       const query = `
-          INSERT INTO Report (employee_id, report_name, report_data)
-          VALUES (?, ?, ?)
-      `;
+          INSERT INTO Report (employee_id, report_name, report_data) VALUES (?, ?, ?)`;
       const values = [employee_id, report_name, report_data];
 
       conn.query(query, values, (err, results) => {
@@ -455,7 +406,36 @@ dataPool.saveReport = (employee_id, report_name, report_data) => {
   });
 };
 
-        
+dataPool.getAllReports = () => {
+  return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM Report ORDER BY time_created DESC';
+
+      conn.query(query, (err, results) => {
+          if (err) {
+              return reject(err);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+dataPool.getReportById = (report_id) => {
+  return new Promise((resolve, reject) => {
+      const query = 'SELECT report_data FROM Report WHERE report_id = ?';
+
+      conn.query(query, [report_id], (err, results) => {
+          if (err) {
+              return reject(err);
+          }
+          if (results.length > 0) {
+              return resolve(results[0]);
+          } else {
+              return resolve(null);
+          }
+      });
+  });
+};
+
 conn.connect((err) => {
     if(err){
         console.log("Error connecting to database: " + err + "\n" + err.message);

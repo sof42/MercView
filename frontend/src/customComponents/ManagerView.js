@@ -4,11 +4,12 @@ import AlertView from './AlertView';
 import '../customStyles/Alerts.css';
 
 const ManagerView = ({
-  user, handleEditProfile, showAllProds, addRemovePart,
-  editPart, viewAllModels, addRemoveModel, checkCompatibility,
-  displayHistory, matchCompatibility, generateReport
+        user, handleEditProfile, showAllProds, addRemovePart,
+        editPart, viewAllModels, addRemoveModel, checkCompatibility,
+        displayHistory, matchCompatibility, generateReport, viewReports
 }) => {
   const [showAlerts, setShowAlerts] = useState(false);
+  
   const toggleAlerts = () => {
     setShowAlerts(!showAlerts);
   };
@@ -61,6 +62,10 @@ const ManagerView = ({
             <button onClick={generateReport} className="btn report-btn">
               <img src="/assets/report.png" className="icon" alt="Generate Report" id='match' />
               Generate Report
+            </button>
+            <button onClick={viewReports} className="btn report-btn">
+              <img src="/assets/allReps.png" className="icon" alt="View All" id='match' />
+              View All Generated Reports
             </button>
           </div>
           <button onClick={toggleAlerts} className="btn alerts-btn floating-alerts-btn1">

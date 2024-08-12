@@ -1,28 +1,8 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Cookies from "universal-cookie";
-import AboutView from "./customComponents/AboutView";
-import HomeView from "./customComponents/HomeView";
-import LoginView from "./customComponents/LoginView";
-import AdminView from "./customComponents/AdminView";
-import ManagerView from "./customComponents/ManagerView";
-import SalesView from "./customComponents/SalesView";
-import AddRemoveUser from "./customComponents/AddRemoveUser";
-import AllUsers from "./customComponents/AllUsers.js";
-import EditProfile from "./customComponents/EditProfile.js";
-import AllProducts from "./customComponents/AllProducts.js";
-import AddRemovePart from "./customComponents/AddRemovePart.js";
-import EditPart from "./customComponents/EditPart.js";
-import ViewAllModels from "./customComponents/ViewAllModels.js";
-import AddRemoveModel from "./customComponents/AddRemoveModel.js";
-import CheckCompatibility from "./customComponents/CheckCompatibility.js";
-import InventoryHistory from "./customComponents/InventoryHistory.js";
-import MatchCompatibleInventory from "./customComponents/MatchCompatibleInventory.js";
-import Report from "./customComponents/Report.js";
-import {API_URL} from './customComponents/utils/config.js';
-const cookies = new Cookies();
+import {
+  React, Component, axios, toast, ToastContainer, Cookies, cookies, API_URL,
+  AboutView, HomeView, LoginView, AdminView, ManagerView, SalesView,
+  AddRemoveUser, AllUsers, EditProfile, AllProducts, AddRemovePart, EditPart, ViewAllModels,
+  AddRemoveModel, CheckCompatibility, InventoryHistory, MatchCompatibleInventory, Report, AllReports} from './Imports';
 
 class App extends Component {
   constructor(props) {
@@ -42,78 +22,59 @@ class App extends Component {
     const { roleId } = userStatus.user;
 
     switch (CurrentPage) {
-      case "home":
-        return <HomeView />;
-      case "about":
-        return <AboutView />;
-      case "login":
-        return <LoginView QUserFromChild={this.QSetUser} />;
+      case "home":    return <HomeView />;
+      case "about":   return <AboutView />;
+      case "login":   return <LoginView QUserFromChild = {this.QSetUser} />;
       case "admin":
-        return roleId === 1 ? <AdminView
-                      user={userStatus.user}
-                      handleManageUsers={this.handleManageUsers}
-                      showAllUsers={this.showAllUsers}
-                      handleEditProfile={this.handleEditProfile} /> : <HomeView />;
+                      return roleId === 1 ? <AdminView
+                                    user = {userStatus.user}
+                                    handleManageUsers = {this.handleManageUsers}
+                                    showAllUsers = {this.showAllUsers}
+                                    handleEditProfile = {this.handleEditProfile}
+                                    displayHistory = {this.displayHistory}
+                                    viewReports = {this.viewReports}
+                                    viewAllModels = {this.viewAllModels}
+                                    showAllProds = {this.showAllProds} /> : <HomeView />;
       case "manager":
-        return roleId === 2 ? <ManagerView
-                      user={userStatus.user}
-                      handleEditProfile = {this.handleEditProfile}
-                      showAllProds = {this.showAllProds}
-                      addRemovePart = {this.addRemovePart}
-                      editPart={this.editPart}
-                      viewAllModels={this.viewAllModels}
-                      addRemoveModel={this.addRemoveModel}
-                      checkCompatibility = {this.checkCompatibility}
-                      displayHistory = {this.displayHistory}
-                      matchCompatibility = {this.matchCompatibility}
-                      generateReport = {this.generateReport}/> : <HomeView />;
+                      return roleId === 2 ? <ManagerView
+                                    user = {userStatus.user}
+                                    handleEditProfile = {this.handleEditProfile}
+                                    showAllProds = {this.showAllProds}
+                                    addRemovePart = {this.addRemovePart}
+                                    editPart = {this.editPart}
+                                    viewAllModels = {this.viewAllModels}
+                                    addRemoveModel = {this.addRemoveModel}
+                                    checkCompatibility = {this.checkCompatibility}
+                                    displayHistory = {this.displayHistory}
+                                    matchCompatibility = {this.matchCompatibility}
+                                    generateReport = {this.generateReport}
+                                    viewReports = {this.viewReports}/> : <HomeView />;
       case "sales":
-        return roleId === 3 ? <SalesView
-                      user={userStatus.user}
-                      handleEditProfile={this.handleEditProfile}
-                      checkCompatibility={this.checkCompatibility}
-                      showAllProds = {this.showAllProds}
-                      viewAllModels={this.viewAllModels}/> : <HomeView />;
-      case "addRemoveUser":
-        return <AddRemoveUser
-                      handleBack = {this.handleBack}/>;
-      case "allUsers":
-        return <AllUsers
-                      handleBack = {this.handleBack} />;
+                      return roleId === 3 ? <SalesView
+                                    user = {userStatus.user}
+                                    handleEditProfile = {this.handleEditProfile}
+                                    checkCompatibility = {this.checkCompatibility}
+                                    showAllProds = {this.showAllProds}
+                                    editPart = {this.editPart}
+                                    viewAllModels = {this.viewAllModels}
+                                    generateReport = {this.generateReport}
+                                    viewReports = {this.viewReports} /> : <HomeView />;
+      case "addRemoveUser":       return <AddRemoveUser handleBack = {this.handleBack}/>;
+      case "allUsers":            return <AllUsers handleBack = {this.handleBack} />;
       case "editProfile":
-        return <EditProfile
-                      user={userStatus.user}
-                      handleBack = {this.handleBack}/>;
-      case "allProds":
-        return <AllProducts
-                      handleBack = {this.handleBack}/>;
-      case "addRemovePart":
-        return <AddRemovePart
-                      handleBack = {this.handleBack}/>;
-      case "editPart":
-        return <EditPart
-                      handleBack = {this.handleBack}/>;
-      case "viewAllModels":
-        return <ViewAllModels
-                      handleBack = {this.handleBack}/>;
-      case "addRemoveModel":
-        return <AddRemoveModel
-                      handleBack = {this.handleBack}/>;
-      case "checkCompatibility":
-        return <CheckCompatibility
-                      handleBack = {this.handleBack}/>;
-      case "displayHistory":
-        return <InventoryHistory
-                      handleBack = {this.handleBack}/>;
-      case "matchCompatibility":
-        return <MatchCompatibleInventory
-                      handleBack = {this.handleBack}/>;
+                                  return <EditProfile user={userStatus.user} handleBack = {this.handleBack}/>;
+      case "allProds":            return <AllProducts handleBack = {this.handleBack}/>;
+      case "addRemovePart":       return <AddRemovePart handleBack = {this.handleBack}/>;
+      case "editPart":            return <EditPart handleBack = {this.handleBack}/>;
+      case "viewAllModels":       return <ViewAllModels handleBack = {this.handleBack}/>;
+      case "addRemoveModel":      return <AddRemoveModel handleBack = {this.handleBack}/>;
+      case "checkCompatibility":  return <CheckCompatibility handleBack = {this.handleBack}/>;
+      case "displayHistory":      return <InventoryHistory handleBack = {this.handleBack}/>;
+      case "matchCompatibility":  return <MatchCompatibleInventory handleBack = {this.handleBack}/>;
       case "generateReport":
-        return <Report
-                      user={userStatus.user}
-                      handleBack = {this.handleBack}/>;
-      default:
-        return <HomeView />; // Fallback
+                                  return <Report user={userStatus.user} handleBack = {this.handleBack}/>;
+      case "viewReports":         return <AllReports handleBack = {this.handleBack}/>;
+      default:        return <HomeView />; // Fallback
     }
   };
 
@@ -165,7 +126,7 @@ class App extends Component {
   
   generateReport = () => {
     this.SetView("generateReport");
-  }
+  };
 
   handleLogout = () => {
     axios
@@ -186,32 +147,39 @@ class App extends Component {
 
   handleManageUsers = () => {
     this.SetView("addRemoveUser");
-  }
+  };
 
   editPart = () => {
     this.SetView("editPart");
-  }
+  };
 
   checkCompatibility = () => {
     this.SetView("checkCompatibility");
-  }
+  };
+  
   matchCompatibility = () => {
-    this.SetView("matchCompatibility");}
+    this.SetView("matchCompatibility");
+  };
+
   displayHistory = () => {
     this.SetView("displayHistory");
-  }
+  };
 
   addRemovePart = () => {
     this.SetView("addRemovePart");
-  }
+  };
 
   viewAllModels = () => {
     this.SetView("viewAllModels");
-  }
+  };
+
+  viewReports = () => {
+    this.SetView("viewReports");
+  };
 
   addRemoveModel = () => {
     this.SetView("addRemoveModel");
-  }
+  };
 
   handleBack = () => {
     const { roleId } = this.state.userStatus.user;
@@ -232,15 +200,15 @@ class App extends Component {
 
   showAllUsers = () => {
     this.SetView("allUsers");
-  }
+  };
 
   handleEditProfile = () => {
     this.SetView("editProfile");
-  }
+  };
 
   showAllProds = () => {
     this.SetView("allProds");
-  }
+  };
 
   componentDidMount() {
     const userSession = cookies.get("userSession");
@@ -249,7 +217,7 @@ class App extends Component {
         userStatus: { logged: true, user: userSession }
       });
     }
-  }
+  };
 
   render() {
     return (
@@ -410,8 +378,7 @@ class App extends Component {
         <ToastContainer />
       </div>
     );
-  }
-
+  };
 }
 
 export default App;

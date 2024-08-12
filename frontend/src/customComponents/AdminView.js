@@ -1,7 +1,9 @@
 import React from 'react';
 import '../customStyles/EmployeeView.css';
 
-const AdminView = ({ user, handleManageUsers, showAllUsers, handleEditProfile }) => {
+const AdminView = ({  user, handleManageUsers, showAllUsers, handleEditProfile, displayHistory,
+                      viewReports, viewAllModels, showAllProds
+}) => {
   return (
     <div>
       <h2>Admin Dashboard</h2>
@@ -20,6 +22,22 @@ const AdminView = ({ user, handleManageUsers, showAllUsers, handleEditProfile })
             <button onClick={handleManageUsers} className="btn manage-users-btn">
               <img src="/assets/AddRem.png" className="icon" alt="Manage Users" />
               Add or Remove Users
+            </button>
+            <button onClick={displayHistory} className="btn history-btn">
+              <img src="/assets/history.png" className="icon" alt="History" />
+              History of Inventory Changes
+            </button>
+            <button onClick={viewReports} className="btn report-btn">
+              <img src="/assets/allReps.png" className="icon" alt="View All" id='match' />
+              View All Generated Reports
+            </button>
+            <button onClick={showAllProds} className="btn show-prods-btn">
+              <img src="/assets/allProds.png" className="icon" id="allProdsimg" alt="View All Parts" />
+              View All Parts
+            </button>
+            <button onClick={viewAllModels} className="btn view-model-btn">
+              <img src="/assets/carModels.png" className="icon" alt="View all Models" />
+              View All Car Models
             </button>
           </div>
         </div>
