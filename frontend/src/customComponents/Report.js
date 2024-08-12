@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_URL } from './utils/config';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -29,10 +29,6 @@ const Report = ({ user, handleBack }) => {
             axios.get(`${API_URL}/history/${selectedPartNumber}`)
                 .then(response => {
                     setHistoryData(response.data);
-                    // Clear history data if no records found
-                    if (response.data.length === 0) {
-                        setHistoryData([]);
-                    }
                 })
                 .catch(error => {
                     setHistoryData([]); // Clear history data on error
@@ -53,8 +49,12 @@ const Report = ({ user, handleBack }) => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF();
                 
-                // Add chart image
-                pdf.addImage(imgData, 'PNG', 10, 40); // Keep image position as is (or adjust if needed)
+                // Specify the width and height of the image
+                const imgWidth = 150; // Width in mm
+                const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+                
+                // Add chart image with smaller size
+                pdf.addImage(imgData, 'PNG', 10, 40, imgWidth, imgHeight);
                 
                 // Add text for report name, user, and part number
                 pdf.setFontSize(12);
@@ -69,7 +69,7 @@ const Report = ({ user, handleBack }) => {
                 formData.append('employee_id', user.userId);
                 formData.append('report_name', reportName);
                 formData.append('report_data', pdfOutput, `${reportName}.pdf`); // Add PDF file as Blob
-    
+        
                 axios.post(`${API_URL}/reports/save`, formData)
                     .then(() => {
                         toast.success("Report saved successfully!");
@@ -82,8 +82,9 @@ const Report = ({ user, handleBack }) => {
         }
     };
     
+
     // Process data for visualization
-    const chartData = {
+    const quantityChartData = {
         labels: historyData.map(item => new Date(item.changed_at).toLocaleDateString()),
         datasets: [
             {
@@ -96,7 +97,27 @@ const Report = ({ user, handleBack }) => {
         ],
     };
 
-    const chartOptions = {
+    const priceChartData = {
+        labels: historyData.map(item => new Date(item.changed_at).toLocaleDateString()),
+        datasets: [
+            {
+                label: 'Price Changes',
+                data: historyData.map(item => ({
+                    x: new Date(item.changed_at).toLocaleDateString(), // X axis (date)
+                    y: item.new_euro_price_per_unit || 0, // Y axis (price)
+                })),
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2,
+                tension: 0.1, // Smooth the line
+                pointRadius: 5, // Increase point size for better visibility
+                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                pointBorderColor: '#fff',
+            },
+        ],
+    };
+
+    const quantityChartOptions = {
         responsive: true,
         scales: {
             x: {
@@ -110,6 +131,33 @@ const Report = ({ user, handleBack }) => {
                 beginAtZero: true,
                 ticks: {
                     stepSize: 5,
+                },
+            },
+        },
+    };
+
+    const priceChartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+        },
+        scales: {
+            x: {
+                type: 'category',
+                labels: historyData.map(item => new Date(item.changed_at).toLocaleDateString()),
+                beginAtZero: false,
+                ticks: {
+                    autoSkip: false,
+                    maxTicksLimit: 10,
+                },
+            },
+            y: {
+                beginAtZero: false,
+                ticks: {
+                    stepSize: 0.1,
+                    maxTicksLimit: 5,
                 },
             },
         },
@@ -141,7 +189,16 @@ const Report = ({ user, handleBack }) => {
             ) : (
                 <div id="chart-container" ref={chartRef}>
                     {historyData.length > 0 && (
-                        <Bar data={chartData} options={chartOptions} />
+                        <>
+                            <div id="quantity-chart">
+                                <h3>Quantity Changes</h3>
+                                <Bar data={quantityChartData} options={quantityChartOptions} />
+                            </div>
+                            <div id="price-chart">
+                                <h3>Price Changes</h3>
+                                <Line data={priceChartData} options={priceChartOptions} />
+                            </div>
+                        </>
                     )}
                 </div>
             )}
