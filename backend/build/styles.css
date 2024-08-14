@@ -1,0 +1,35 @@
+body {
+  background-color: #e6dddd;
+}
+
+.navbar.bg-dark {
+  background-color: #000000 !important;
+}
+.navbar-dark .navbar-brand {
+  color: #ffffff;
+  font-size: 2em;
+}
+.navbar-brand {
+  padding-left: 43%;
+}
+.navbar-dark .navbar-brand:hover {
+  color: #3a3936;
+}
+.offcanvas.offcanvas-end {
+  background-color: #000000 !important;
+}
+.navbar-toggler {
+  border-color: #ffffff;
+}
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgb(77, 69, 69);
+}
+
+.card-header {
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.card-footer {
+  border-radius: 0 0 0.5rem 0.5rem;
+}

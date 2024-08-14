@@ -1,5 +1,6 @@
+import React, { Component } from 'react';
 import {
-  React, Component, axios, toast, ToastContainer, Cookies, cookies, API_URL,
+  axios, toast, ToastContainer, Cookies, cookies, API_URL,
   AboutView, HomeView, LoginView, AdminView, ManagerView, SalesView,
   AddRemoveUser, AllUsers, EditProfile, AllProducts, AddRemovePart, EditPart, ViewAllModels,
   AddRemoveModel, CheckCompatibility, InventoryHistory, MatchCompatibleInventory, Report, AllReports} from './Imports';

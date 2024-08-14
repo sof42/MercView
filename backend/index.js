@@ -38,7 +38,7 @@ const history = require('./routes/history.js');
 const reports = require('./routes/reports.js');
 
 app.get('/', (req, res) => {
-    res.send('MUST BE CHANGED TO A STATIC FILE');
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.use("/parts", parts);

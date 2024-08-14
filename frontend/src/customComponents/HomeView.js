@@ -1,7 +1,7 @@
 import React from "react";
 import "../customStyles/homeView.css";
 
-class homeView extends React.Component {
+class HomeView extends React.Component {
   render() {
     return (
       <div className="home-view">
@@ -26,13 +26,13 @@ class homeView extends React.Component {
                 </p>
                 <ul className="list-group list-group-flush">
                   <li className="list-group-item">
-                    ✔ Real-time Inventory Tracking
+                    ✔ Alerts for Low Part Quantities
                   </li>
                   <li className="list-group-item">
                     ✔ Detailed Reporting and Analytics
                   </li>
                   <li className="list-group-item">
-                    ✔ Easy Integration with Other Systems
+                    ✔ Simplified User Interface
                   </li>
                 </ul>
               </div>
@@ -47,4 +47,4 @@ class homeView extends React.Component {
   }
 }
 
-export default homeView;
+export default HomeView;

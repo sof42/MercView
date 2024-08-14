@@ -1,4 +1,3 @@
-import {React, Component} from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,7 +26,7 @@ import { API_URL } from './customComponents/utils/config';
 const cookies = new Cookies();
 
 export {
-    React, Component, axios, toast, ToastContainer, Cookies, cookies, API_URL,
+    axios, toast, ToastContainer, Cookies, cookies, API_URL,
     AboutView, HomeView, LoginView, AdminView, ManagerView, SalesView,
     AddRemoveUser, AllUsers, EditProfile, AllProducts, AddRemovePart, EditPart, ViewAllModels,
     AddRemoveModel, CheckCompatibility, InventoryHistory, MatchCompatibleInventory, Report, AllReports
