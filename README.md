@@ -4,14 +4,6 @@
 
 **Project is currently being hosted on**: [http://88.200.63.148:8162](http://88.200.63.148:8162)
 
-## Table of Contents
-
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Running the App](#running-the-app)
-- [Credits](#credits)
-
 ## Project Overview
 
 MercView aims to resolve key challenges faced with inventory management. MercView is designed to enhance data handling, improve supply chain management, and support data-driven decision-making.
@@ -30,6 +22,25 @@ MercView aims to resolve key challenges faced with inventory management. MercVie
 - **Backend**: Node.js, Express.js
 - **Database**: MySQL
 - **Styling**: Bootstrap
+
+## Login Credentials
+
+To access the system with different roles, use the following credentials:
+
+- **Inventory Manager**  
+  - Username: `manager`  
+  - Password: `manager`
+
+- **Sales Personnel**  
+  - Username: `sales`  
+  - Password: `sales`
+
+- **Administrator**  
+  - Username: `admin`  
+  - Password: `admin`
+
+## Credits
+This project is developed by Sofija Kochovska as part of the Systems III - Information systems course.
 
 ## Running the App
 
